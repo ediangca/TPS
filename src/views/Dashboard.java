@@ -6,10 +6,16 @@
 package views;
 
 import java.awt.CardLayout;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,9 +28,17 @@ public class Dashboard extends javax.swing.JFrame {
 
     Connection connection;
     Statement statement;
+
     ResultSet result;
-    
+    CallableStatement cstmt;
+
     int AccountNo;
+
+//    tables
+    DefaultTableModel requestTableModel;
+
+//    selected tables
+    int requestTableSelected;
 
     public Dashboard() {
         initComponents();
@@ -37,7 +51,14 @@ public class Dashboard extends javax.swing.JFrame {
         this.connection = connection;
         setLocationRelativeTo(null);
         contentCards = (CardLayout) content.getLayout();
-        
+
+//        tables
+        requestTableModel = (DefaultTableModel) requestTable.getModel();
+        requestTable.setModel(requestTableModel);
+
+        requestTableModel = (DefaultTableModel) requestTable.getModel();
+        requestTable.setModel(requestTableModel);
+
         initTables();
     }
 
@@ -93,13 +114,14 @@ public class Dashboard extends javax.swing.JFrame {
         Request = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        requestTable = new javax.swing.JTable();
+        searchReqText = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jComboBox3 = new javax.swing.JComboBox<>();
+        jButton8 = new javax.swing.JButton();
         viewRequest = new javax.swing.JPanel();
         jLabel121 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
@@ -111,18 +133,18 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel127 = new javax.swing.JLabel();
         jLabel128 = new javax.swing.JLabel();
         jLabel129 = new javax.swing.JLabel();
-        jLabel130 = new javax.swing.JLabel();
-        jLabel131 = new javax.swing.JLabel();
-        jLabel132 = new javax.swing.JLabel();
-        jLabel133 = new javax.swing.JLabel();
-        jLabel134 = new javax.swing.JLabel();
-        jLabel135 = new javax.swing.JLabel();
-        jLabel136 = new javax.swing.JLabel();
-        jLabel137 = new javax.swing.JLabel();
+        viewReqNo = new javax.swing.JLabel();
+        viewUsage = new javax.swing.JLabel();
+        viewProject = new javax.swing.JLabel();
+        viewPurpose = new javax.swing.JLabel();
+        viewMOP = new javax.swing.JLabel();
+        viewAmount = new javax.swing.JLabel();
+        viewReqBy = new javax.swing.JLabel();
+        viewStatus = new javax.swing.JLabel();
         jLabel138 = new javax.swing.JLabel();
-        jLabel139 = new javax.swing.JLabel();
+        viewCAT = new javax.swing.JLabel();
         jLabel140 = new javax.swing.JLabel();
-        jLabel141 = new javax.swing.JLabel();
+        viewUAT = new javax.swing.JLabel();
         jButton24 = new javax.swing.JButton();
         Voucher = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
@@ -833,7 +855,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel6.setText("Request");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        requestTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -842,14 +864,19 @@ public class Dashboard extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable2);
+        requestTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                requestTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(requestTable);
 
         jButton1.setBackground(new java.awt.Color(0, 102, 204));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -865,6 +892,11 @@ public class Dashboard extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Edit");
         jButton2.setPreferredSize(new java.awt.Dimension(80, 23));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(153, 153, 153));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
@@ -886,6 +918,15 @@ public class Dashboard extends javax.swing.JFrame {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter" }));
 
+        jButton8.setForeground(new java.awt.Color(0, 102, 204));
+        jButton8.setText("Refresh");
+        jButton8.setContentAreaFilled(false);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout RequestLayout = new javax.swing.GroupLayout(Request);
         Request.setLayout(RequestLayout);
         RequestLayout.setHorizontalGroup(
@@ -897,16 +938,19 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                         .addGap(494, 494, 494)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(RequestLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, RequestLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(RequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(RequestLayout.createSequentialGroup()
+                                .addComponent(jButton8)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(RequestLayout.createSequentialGroup()
                                 .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchReqText, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(2, 2, 2)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -926,9 +970,11 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField1)
+                    .addComponent(searchReqText)
                     .addComponent(jComboBox3))
-                .addGap(29, 29, 29)
+                .addGap(2, 2, 2)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
         );
 
@@ -963,31 +1009,31 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel129.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel129.setText("Status:");
 
-        jLabel130.setText("Request Number");
+        viewReqNo.setText("Request Number");
 
-        jLabel131.setText("Usage");
+        viewUsage.setText("Usage");
 
-        jLabel132.setText("Project");
+        viewProject.setText("Project");
 
-        jLabel133.setText("Purpose");
+        viewPurpose.setText("Purpose");
 
-        jLabel134.setText("Method of Payment");
+        viewMOP.setText("Method of Payment");
 
-        jLabel135.setText("Amount");
+        viewAmount.setText("Amount");
 
-        jLabel136.setText("Requested by");
+        viewReqBy.setText("Requested by");
 
-        jLabel137.setText("Status");
+        viewStatus.setText("Status");
 
         jLabel138.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel138.setText("Created At:");
 
-        jLabel139.setText("Created At");
+        viewCAT.setText("Created At");
 
         jLabel140.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel140.setText("Updated At:");
 
-        jLabel141.setText("Updated At");
+        viewUAT.setText("Updated At");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -1008,16 +1054,16 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel140))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel141)
-                    .addComponent(jLabel139)
-                    .addComponent(jLabel137)
-                    .addComponent(jLabel136)
-                    .addComponent(jLabel135)
-                    .addComponent(jLabel133)
-                    .addComponent(jLabel132)
-                    .addComponent(jLabel131)
-                    .addComponent(jLabel130)
-                    .addComponent(jLabel134))
+                    .addComponent(viewUAT)
+                    .addComponent(viewCAT)
+                    .addComponent(viewStatus)
+                    .addComponent(viewReqBy)
+                    .addComponent(viewAmount)
+                    .addComponent(viewPurpose)
+                    .addComponent(viewProject)
+                    .addComponent(viewUsage)
+                    .addComponent(viewReqNo)
+                    .addComponent(viewMOP))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
@@ -1026,43 +1072,43 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel122)
-                    .addComponent(jLabel130))
+                    .addComponent(viewReqNo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel123)
-                    .addComponent(jLabel131))
+                    .addComponent(viewUsage))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel124)
-                    .addComponent(jLabel132))
+                    .addComponent(viewProject))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel125)
-                    .addComponent(jLabel133))
+                    .addComponent(viewPurpose))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel126)
-                    .addComponent(jLabel134))
+                    .addComponent(viewMOP))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel127)
-                    .addComponent(jLabel135))
+                    .addComponent(viewAmount))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel128)
-                    .addComponent(jLabel136))
+                    .addComponent(viewReqBy))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel129)
-                    .addComponent(jLabel137))
+                    .addComponent(viewStatus))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel138)
-                    .addComponent(jLabel139))
+                    .addComponent(viewCAT))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel140)
-                    .addComponent(jLabel141, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(viewUAT, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -2495,19 +2541,66 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_Account1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            String query = searchReqText.getText();
+            requestTableModel.setRowCount(0);
+
+            statement = connection.createStatement();
+            ResultSet r = statement.executeQuery("select * from request WHERE `usage` = '" + query + "' OR project = '" + query + "' OR purpose = '" + query + "'");
+            while (r.next()) {
+                Object[] tmp = {r.getString("ReqNo"), r.getString("usage"), r.getString("project"), r.getString("purpose"), r.getString("mop"), r.getDouble("amount"), r.getTimestamp("DateCreated")};
+                requestTableModel.addRow(tmp);
+                requestTableModel.fireTableDataChanged();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        createRequest createrequest = new createRequest(this, true);
+        createRequest createrequest = new createRequest(this, true, this.connection, this.AccountNo);
         createrequest.setLocationRelativeTo(null);
         createrequest.setVisible(true);
+
+        initTables();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        contentCards.show(content, "viewReq");
+        // TODO add your handling code here:       
+        int row = requestTable.getSelectedRow();
+
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "No Request Selected", "Request Not Found", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            statement = connection.createStatement();
+            ResultSet r = statement.executeQuery("SELECT ReqNo, username, `usage`, project, purpose, mop, amount, `status`, request.DateUpdated, request.DateCreated FROM request JOIN accounts ON request.AccNo = accounts.AccNo WHERE request.ReqNo = " + requestTableSelected);
+
+            if (r.next()) {
+                viewReqNo.setText(String.valueOf(r.getInt("ReqNo")));
+                viewPurpose.setText(r.getString("purpose"));
+                viewReqBy.setText(r.getString("username"));
+                viewUsage.setText(r.getString("usage"));
+                viewAmount.setText(String.valueOf(r.getDouble("amount")));
+                viewMOP.setText(r.getString("mop"));
+                viewStatus.setText(r.getString("status"));
+                viewProject.setText(r.getString("project"));
+                viewCAT.setText(String.valueOf(r.getTimestamp("DateCreated")));
+                viewUAT.setText(String.valueOf(r.getTimestamp("DateUpdated")));
+                contentCards.show(content, "viewReq");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No Request Selected", "Request Not Found", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -2598,6 +2691,31 @@ public class Dashboard extends javax.swing.JFrame {
         createvoucher.setVisible(true);
     }//GEN-LAST:event_jButton19ActionPerformed
 
+    private void requestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_requestTableMouseClicked
+        requestTableSelected = Integer.parseInt(requestTable.getValueAt(requestTable.getSelectedRow(), 0).toString());        // TODO add your handling code here:
+    }//GEN-LAST:event_requestTableMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            statement = connection.createStatement();
+            ResultSet r = statement.executeQuery("SELECT * FROM request WHERE request.ReqNo = " + requestTableSelected);
+
+            if (r.next()) {
+                createRequest editAcc = new createRequest(this, true, connection, this.AccountNo, r, requestTableSelected);
+                editAcc.setLocationRelativeTo(this);
+                editAcc.setVisible(true);
+                initTables();
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        initTables();
+        searchReqText.setText(null);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2676,6 +2794,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -2703,19 +2822,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel127;
     private javax.swing.JLabel jLabel128;
     private javax.swing.JLabel jLabel129;
-    private javax.swing.JLabel jLabel130;
-    private javax.swing.JLabel jLabel131;
-    private javax.swing.JLabel jLabel132;
-    private javax.swing.JLabel jLabel133;
-    private javax.swing.JLabel jLabel134;
-    private javax.swing.JLabel jLabel135;
-    private javax.swing.JLabel jLabel136;
-    private javax.swing.JLabel jLabel137;
     private javax.swing.JLabel jLabel138;
-    private javax.swing.JLabel jLabel139;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel140;
-    private javax.swing.JLabel jLabel141;
     private javax.swing.JLabel jLabel142;
     private javax.swing.JLabel jLabel143;
     private javax.swing.JLabel jLabel144;
@@ -2839,7 +2948,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
@@ -2847,7 +2955,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
     private javax.swing.JTable jTable9;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
@@ -2858,6 +2965,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JDialog listDialog;
+    private javax.swing.JTable requestTable;
+    private javax.swing.JTextField searchReqText;
     private javax.swing.JPanel settingGroup;
     private javax.swing.JButton settingsBtn;
     private javax.swing.JPanel sidebar;
@@ -2865,8 +2974,18 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel transGroup;
     private javax.swing.JLabel userWelcome;
     private javax.swing.JPanel viewAccount;
+    private javax.swing.JLabel viewAmount;
+    private javax.swing.JLabel viewCAT;
     private javax.swing.JPanel viewLiquidations;
+    private javax.swing.JLabel viewMOP;
+    private javax.swing.JLabel viewProject;
+    private javax.swing.JLabel viewPurpose;
+    private javax.swing.JLabel viewReqBy;
+    private javax.swing.JLabel viewReqNo;
     private javax.swing.JPanel viewRequest;
+    private javax.swing.JLabel viewStatus;
+    private javax.swing.JLabel viewUAT;
+    private javax.swing.JLabel viewUsage;
     // End of variables declaration//GEN-END:variables
 
     private void showItemPanel(JPanel panelItem) {
@@ -2888,11 +3007,23 @@ public class Dashboard extends javax.swing.JFrame {
     void setAccount(int AccountNo, String accountName) {
         this.AccountNo = AccountNo;
         userWelcome.setText(accountName);
-      
+
     }
 
     private void initTables() {
-       
+        requestTableModel.setRowCount(0);
+        try {
+            statement = connection.createStatement();
+            ResultSet r = statement.executeQuery("select * from request");
+            while (r.next()) {
+                Object[] tmp = {r.getString("ReqNo"), r.getString("usage"), r.getString("project"), r.getString("purpose"), r.getString("mop"), r.getDouble("amount"), r.getTimestamp("DateCreated")};
+                requestTableModel.addRow(tmp);
+                requestTableModel.fireTableDataChanged();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

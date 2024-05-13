@@ -922,16 +922,20 @@
                               <EmptySpace min="-2" pref="494" max="-2" attributes="0"/>
                               <Component id="jButton4" min="-2" pref="87" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
+                                      <Component id="jButton8" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
                                       <Component id="jComboBox3" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jTextField1" min="-2" pref="411" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="searchReqText" min="-2" pref="411" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                                       <Component id="jButton2" min="-2" pref="78" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jButton3" min="-2" pref="80" max="-2" attributes="0"/>
@@ -959,10 +963,12 @@
                               <Component id="jButton2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="jButton1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jTextField1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="searchReqText" alignment="0" max="32767" attributes="0"/>
                           <Component id="jComboBox3" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Component id="jButton8" min="-2" pref="21" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" pref="410" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -981,7 +987,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable2">
+                <Component class="javax.swing.JTable" name="requestTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="7" rowCount="0">
@@ -990,15 +996,18 @@
                         <Column editable="false" title="Proje ct" type="java.lang.Object"/>
                         <Column editable="false" title="Purpose" type="java.lang.Object"/>
                         <Column editable="false" title="MOP" type="java.lang.Object"/>
-                        <Column editable="true" title="Amount" type="java.lang.Object"/>
-                        <Column editable="true" title="Created At" type="java.lang.Object"/>
+                        <Column editable="false" title="Amount" type="java.lang.Object"/>
+                        <Column editable="false" title="Created At" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="requestTableMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="searchReqText">
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
@@ -1030,6 +1039,9 @@
                   <Dimension value="[80, 23]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton3">
               <Properties>
@@ -1070,6 +1082,18 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton8">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="66" red="0" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Refresh"/>
+                <Property name="contentAreaFilled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -1150,16 +1174,16 @@
                           </Group>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel141" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel139" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel137" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel136" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel135" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel133" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel132" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel131" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel130" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel134" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewUAT" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewCAT" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewStatus" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewReqBy" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewAmount" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewPurpose" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewProject" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewUsage" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewReqNo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewMOP" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -1171,52 +1195,52 @@
                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel122" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel130" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewReqNo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel123" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel131" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewUsage" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel124" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel132" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewProject" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel125" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel133" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewPurpose" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel126" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel134" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewMOP" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel127" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel135" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewAmount" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel128" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel136" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewReqBy" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel129" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel137" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel138" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel139" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="viewCAT" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel140" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel141" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                              <Component id="viewUAT" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="34" max="32767" attributes="0"/>
                       </Group>
@@ -1288,42 +1312,42 @@
                     <Property name="text" type="java.lang.String" value="Status:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel130">
+                <Component class="javax.swing.JLabel" name="viewReqNo">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Request Number"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel131">
+                <Component class="javax.swing.JLabel" name="viewUsage">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Usage"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel132">
+                <Component class="javax.swing.JLabel" name="viewProject">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Project"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel133">
+                <Component class="javax.swing.JLabel" name="viewPurpose">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Purpose"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel134">
+                <Component class="javax.swing.JLabel" name="viewMOP">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Method of Payment"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel135">
+                <Component class="javax.swing.JLabel" name="viewAmount">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Amount"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel136">
+                <Component class="javax.swing.JLabel" name="viewReqBy">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Requested by"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel137">
+                <Component class="javax.swing.JLabel" name="viewStatus">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Status"/>
                   </Properties>
@@ -1336,7 +1360,7 @@
                     <Property name="text" type="java.lang.String" value="Created At:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel139">
+                <Component class="javax.swing.JLabel" name="viewCAT">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Created At"/>
                   </Properties>
@@ -1349,7 +1373,7 @@
                     <Property name="text" type="java.lang.String" value="Updated At:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel141">
+                <Component class="javax.swing.JLabel" name="viewUAT">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Updated At"/>
                   </Properties>
