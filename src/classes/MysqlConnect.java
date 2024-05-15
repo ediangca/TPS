@@ -44,6 +44,7 @@ public class MysqlConnect {
             properties.setProperty("user", USERNAME);
             properties.setProperty("password", PASSWORD);
             properties.setProperty("MaxPooledStatements", MAX_POOL);
+            properties.setProperty("useSSL", "false");
         }
         return properties;
     }

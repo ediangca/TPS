@@ -58,14 +58,16 @@ public class TPS {
 
                 try {
                     System.out.println("Database Connecting..");
-                    db = new MysqlConnect("localhost", "tps", "root", "");
+                    db = new MysqlConnect("localhost", "tps", "wb2c0", "parrot");
                     connection = db.connect();
+                      System.out.println("Database Connecting..");
                     if (!(connection == null)) {
                         System.out.println("Database Successfully establish..");
                         statement = connection.createStatement();
                         System.err.println("SELECT Host, Port, Username, AES_DECRYPT(`Password`,9)as password, `Database` from host where isActive = 1;");
                         result = statement.executeQuery("SELECT Host, Port, Username, AES_DECRYPT(`Password`,9)as password, `Database` from host where isActive = 1;");
                         if (result.next()) {
+                        
                             System.out.println("Connecting Default Connection >>> " + result.getString(1) + " ..");
                             db = new MysqlConnect(result.getString(1), result.getString(5), result.getString(3), result.getString(4));
                             connection = db.connect();
@@ -76,7 +78,7 @@ public class TPS {
                     }
                 } catch (Exception e) {
                     JOptionPane.showConfirmDialog(new JFrame(), e.getMessage(), "D-TECH DB CONFIG ERROR", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-                    System.err.println(e.getMessage());
+//                    System.err.println(e.getMessage());
                     e.printStackTrace();
                     return;
                 }
