@@ -5,7 +5,10 @@
  */
 package views;
 
+import com.sun.org.apache.xerces.internal.impl.dv.xs.DateTimeDV;
 import java.awt.CardLayout;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  *
@@ -21,8 +24,10 @@ public class test extends javax.swing.JFrame {
     
     public test() {
         initComponents();
-        cards = (CardLayout) this.getLayout();
+//        cards = (CardLayout) this.getLayout();
       //cards.add
+      String timeStamp = new SimpleDateFormat("yyyy-mm-dd").format(Calendar.getInstance().getTime());
+        System.out.println(timeStamp);
     }
 
     /**

@@ -5,18 +5,63 @@
  */
 package views;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author edian
  */
 public class createRequest extends java.awt.Dialog {
 
-    /**
-     * Creates new form showVoucherList
-     */
-    public createRequest(java.awt.Frame parent, boolean modal) {
+    Connection connection;
+    Statement statement;
+    ResultSet result;
+    CallableStatement cstmt;
+
+    int userNo;
+    ResultSet r;
+    boolean isEdit = false;
+    int ReqNo;
+
+    public createRequest(java.awt.Frame parent, boolean modal, Connection connection, int userNo) {
         super(parent, modal);
         initComponents();
+        this.connection = connection;
+        this.userNo = userNo;
+    }
+
+    public createRequest(java.awt.Frame parent, boolean modal, Connection connection, int userNo, ResultSet res, int reqNo) {
+        super(parent, modal);
+        initComponents();
+
+        isEdit = true;
+        this.connection = connection;
+        this.userNo = userNo;
+
+        this.r = res;
+        this.ReqNo = reqNo;
+        
+        try {
+            textPurpose.setText(r.getString("purpose"));
+            textUsage.setText(r.getString("usage"));
+            textAmount.setText(String.valueOf(r.getDouble("amount")));
+            textMOP.setText(r.getString("mop"));
+            textProject.setText(r.getString("project"));
+          
+        
+        } catch (SQLException e) {
+        }
     }
 
     /**
@@ -31,17 +76,17 @@ public class createRequest extends java.awt.Dialog {
         jPanel17 = new javax.swing.JPanel();
         jLabel114 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        textUsage = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        textPurpose = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        textProject = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        textMOP = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jButton19 = new javax.swing.JButton();
+        textAmount = new javax.swing.JTextField();
+        addBtn = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
 
         setUndecorated(true);
@@ -88,23 +133,23 @@ public class createRequest extends java.awt.Dialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(272, 272, 272))
-                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textAmount, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(200, 200, 200))
-                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textMOP, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(277, 277, 277))
-                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textProject, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(271, 271, 271))
-                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textPurpose, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(284, 284, 284))
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(textUsage, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(40, 40, 40))
         );
         jPanel4Layout.setVerticalGroup(
@@ -113,23 +158,23 @@ public class createRequest extends java.awt.Dialog {
                 .addGap(38, 38, 38)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textUsage, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textPurpose, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textProject, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textMOP, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
@@ -153,9 +198,14 @@ public class createRequest extends java.awt.Dialog {
                 .addContainerGap())
         );
 
-        jButton19.setBackground(new java.awt.Color(0, 102, 255));
-        jButton19.setForeground(new java.awt.Color(255, 255, 255));
-        jButton19.setText("Add");
+        addBtn.setBackground(new java.awt.Color(0, 102, 255));
+        addBtn.setForeground(new java.awt.Color(255, 255, 255));
+        addBtn.setText("Add");
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtnActionPerformed(evt);
+            }
+        });
 
         btnClose.setBackground(new java.awt.Color(153, 153, 153));
         btnClose.setForeground(new java.awt.Color(255, 255, 255));
@@ -176,7 +226,7 @@ public class createRequest extends java.awt.Dialog {
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 293, Short.MAX_VALUE)
-                        .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel17, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -186,7 +236,7 @@ public class createRequest extends java.awt.Dialog {
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                     .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -209,27 +259,34 @@ public class createRequest extends java.awt.Dialog {
         this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                createRequest dialog = new createRequest(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        LocalDate localDate = LocalDate.parse(date);
+        Timestamp timestamp = java.sql.Timestamp.valueOf(localDate.atStartOfDay());
+
+        String usage = textUsage.getText();
+        String purpose = textPurpose.getText();
+        String project = textProject.getText();
+        String mop = textMOP.getText();
+        String amount = textAmount.getText();
+
+        if (usage.isEmpty() || purpose.isEmpty() || project.isEmpty() || mop.isEmpty() || amount.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!isEdit) {
+            createAcc(usage, project, purpose, mop, amount, timestamp);
+            return;
+        }
+        
+         editAcc(usage, project, purpose, mop, amount, timestamp);
+    }//GEN-LAST:event_addBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addBtn;
     private javax.swing.JButton btnClose;
-    private javax.swing.JButton jButton19;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel114;
@@ -239,10 +296,54 @@ public class createRequest extends java.awt.Dialog {
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField textAmount;
+    private javax.swing.JTextField textMOP;
+    private javax.swing.JTextField textProject;
+    private javax.swing.JTextField textPurpose;
+    private javax.swing.JTextField textUsage;
     // End of variables declaration//GEN-END:variables
+
+    private void createAcc(String usage, String project, String purpose, String mop, String amount, Timestamp timestamp) {
+            try {
+            cstmt = connection.prepareCall("call `insert.Requests`(?, ?, ?, ?, ?, ?, ?, ?, 'For Approval')");
+            cstmt.setString(1, usage);
+            cstmt.setString(2, project);
+            cstmt.setString(3, purpose);
+            cstmt.setString(4, mop);
+            cstmt.setDouble(5, Double.parseDouble(amount));
+            cstmt.setTimestamp(6, timestamp);
+            cstmt.setTimestamp(7, timestamp);
+            cstmt.setInt(8, userNo);
+
+            cstmt.execute();
+
+            JOptionPane.showMessageDialog(this, "Request created", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(createRequest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+      private void editAcc(String usage, String project, String purpose, String mop, String amount, Timestamp timestamp) {
+            try {
+            cstmt = connection.prepareCall("UPDATE request SET `usage` = ?, `project` = ?, `purpose` = ?, `mop` = ?, `amount` = ? , `DateUpdated` = ?, `AccNo` = ? WHERE `ReqNo` = ?");
+            cstmt.setString(1, usage);
+            cstmt.setString(2, project);
+            cstmt.setString(3, purpose);
+            cstmt.setString(4, mop);
+            cstmt.setDouble(5, Double.parseDouble(amount));
+            cstmt.setTimestamp(6, timestamp);
+            cstmt.setInt(7, this.userNo);
+            cstmt.setInt(8, this.ReqNo);
+
+            cstmt.execute();
+
+            JOptionPane.showMessageDialog(this, "Request Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(createRequest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
