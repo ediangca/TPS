@@ -5,6 +5,15 @@
  */
 package views;
 
+import classes.DateMaker;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,12 +22,21 @@ import javax.swing.JOptionPane;
  */
 public class createVoucher extends java.awt.Dialog {
 
-    /**
-     * Creates new form showVoucherList
-     */
-    public createVoucher(java.awt.Frame parent, boolean modal) {
+    int reqNo;
+    int AccNo;
+    
+    Connection conn;
+    Statement statement;
+    ResultSet result;
+    CallableStatement cstmt;
+    
+    public createVoucher(java.awt.Frame parent, boolean modal, int reqNo, int AccNo, Connection conn) {
         super(parent, modal);
         initComponents();
+        
+        this.reqNo = reqNo;
+        this.AccNo = AccNo;
+        this.conn = conn;
     }
 
     /**
@@ -43,6 +61,8 @@ public class createVoucher extends java.awt.Dialog {
         jLabel90 = new javax.swing.JLabel();
         textMOP = new javax.swing.JTextField();
         jLabel91 = new javax.swing.JLabel();
+        refNo = new javax.swing.JTextField();
+        jLabel92 = new javax.swing.JLabel();
 
         setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -80,7 +100,7 @@ public class createVoucher extends java.awt.Dialog {
 
         jButton19.setBackground(new java.awt.Color(0, 102, 255));
         jButton19.setForeground(new java.awt.Color(255, 255, 255));
-        jButton19.setText("Add");
+        jButton19.setText("Approve");
         jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton19ActionPerformed(evt);
@@ -117,6 +137,15 @@ public class createVoucher extends java.awt.Dialog {
         jLabel91.setText("Method of Payment");
         jLabel91.setToolTipText("");
 
+        refNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refNoActionPerformed(evt);
+            }
+        });
+
+        jLabel92.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel92.setText("Reference Number");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -124,6 +153,8 @@ public class createVoucher extends java.awt.Dialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel92)
+                    .addComponent(refNo, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel91)
                     .addComponent(jLabel90)
                     .addComponent(jLabel89)
@@ -142,7 +173,11 @@ public class createVoucher extends java.awt.Dialog {
                 .addComponent(jLabel89)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textType, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(9, 9, 9)
+                .addComponent(jLabel92)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(refNo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jLabel98, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textAMount, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,7 +189,7 @@ public class createVoucher extends java.awt.Dialog {
                 .addComponent(jLabel91)
                 .addGap(5, 5, 5)
                 .addComponent(textMOP, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
@@ -179,7 +214,7 @@ public class createVoucher extends java.awt.Dialog {
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -206,20 +241,55 @@ public class createVoucher extends java.awt.Dialog {
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
+        Timestamp timestamp = DateMaker.getTime();
+        
         String type = textType.getText();
         String amount = textAMount.getText();
+        String reference = refNo.getText();
         String purpose = textPurpose.getText();
         String mop = textMOP.getText();
         
-        if (type.isEmpty() || amount.isEmpty() || purpose.isEmpty() || mop.isEmpty()) {
+        if (type.isEmpty() || amount.isEmpty() || purpose.isEmpty() || mop.isEmpty() || reference.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+//        voucherType` varchar(45),
+//          `amount` double(10,2),
+//          `REFNo` varchar(45),
+//          `ReqNo` int,
+//          `DateCreated` datetime,
+//          `DateUpdated` datetime,
+//          `AccNo` int unsigned,
+//          `status` varchar(45))
+        
+        try {
+            cstmt = conn.prepareCall("CALL `tps`.`insert.Voucher`(? ,? , ?, ? ,? , ?, ?, ?)");
+            cstmt.setString(1, type);
+            cstmt.setDouble(2, Double.parseDouble(amount));
+            cstmt.setString(3, reference);
+            cstmt.setInt(4, this.reqNo);
+            cstmt.setTimestamp(5, timestamp);
+             cstmt.setTimestamp(6, timestamp);
+             cstmt.setInt(7, this.AccNo);
+             cstmt.setString(8, "For Liquidation");
+             
+            cstmt.execute();
+             JOptionPane.showMessageDialog(this, "Voucher Created", "Success", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(createVoucher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void textTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textTypeActionPerformed
+
+    private void refNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refNoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refNoActionPerformed
 
 
 
@@ -230,10 +300,12 @@ public class createVoucher extends java.awt.Dialog {
     private javax.swing.JLabel jLabel89;
     private javax.swing.JLabel jLabel90;
     private javax.swing.JLabel jLabel91;
+    private javax.swing.JLabel jLabel92;
     private javax.swing.JLabel jLabel98;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField refNo;
     private javax.swing.JTextField textAMount;
     private javax.swing.JTextField textMOP;
     private javax.swing.JTextField textPurpose;

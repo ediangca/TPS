@@ -277,11 +277,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="transBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                  <Component id="transGroup" min="-2" pref="93" max="-2" attributes="0"/>
+                  <Component id="transGroup" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="settingsBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="settingGroup" min="-2" pref="93" max="-2" attributes="0"/>
+                  <Component id="settingGroup" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>

@@ -5,6 +5,7 @@
  */
 package views;
 
+import classes.DateMaker;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -260,9 +261,7 @@ public class createRequest extends java.awt.Dialog {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-        LocalDate localDate = LocalDate.parse(date);
-        Timestamp timestamp = java.sql.Timestamp.valueOf(localDate.atStartOfDay());
+      Timestamp timestamp = DateMaker.getTime();
 
         String usage = textUsage.getText();
         String purpose = textPurpose.getText();

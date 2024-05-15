@@ -38,7 +38,7 @@ public class Dashboard extends javax.swing.JFrame {
     DefaultTableModel requestTableModel;
 
 //    selected tables
-    int requestTableSelected;
+    int requestTableID;
 
     public Dashboard() {
         initComponents();
@@ -2576,7 +2576,7 @@ public class Dashboard extends javax.swing.JFrame {
         }
         try {
             statement = connection.createStatement();
-            ResultSet r = statement.executeQuery("SELECT ReqNo, username, `usage`, project, purpose, mop, amount, `status`, request.DateUpdated, request.DateCreated FROM request JOIN accounts ON request.AccNo = accounts.AccNo WHERE request.ReqNo = " + requestTableSelected);
+            ResultSet r = statement.executeQuery("SELECT ReqNo, username, `usage`, project, purpose, mop, amount, `status`, request.DateUpdated, request.DateCreated FROM request JOIN accounts ON request.AccNo = accounts.AccNo WHERE request.ReqNo = " + requestTableID);
 
             if (r.next()) {
                 viewReqNo.setText(String.valueOf(r.getInt("ReqNo")));
@@ -2659,6 +2659,10 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
         // TODO add your handling code here:
+        createVoucher createvoucher = new createVoucher(this, true, this.requestTableID, this.AccountNo, this.connection);
+        createvoucher.setLocationRelativeTo(this);
+        createvoucher.setVisible(true);
+        
     }//GEN-LAST:event_jButton24ActionPerformed
 
     private void jTextField20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField20ActionPerformed
@@ -2686,23 +2690,23 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
-        createVoucher createvoucher = new createVoucher(this, true);
-        createvoucher.setLocationRelativeTo(this);
-        createvoucher.setVisible(true);
+//        createVoucher createvoucher = new createVoucher(this, true);
+//        createvoucher.setLocationRelativeTo(this);
+//        createvoucher.setVisible(true);
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void requestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_requestTableMouseClicked
-        requestTableSelected = Integer.parseInt(requestTable.getValueAt(requestTable.getSelectedRow(), 0).toString());        // TODO add your handling code here:
+        requestTableID = Integer.parseInt(requestTable.getValueAt(requestTable.getSelectedRow(), 0).toString());        // TODO add your handling code here:
     }//GEN-LAST:event_requestTableMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
             statement = connection.createStatement();
-            ResultSet r = statement.executeQuery("SELECT * FROM request WHERE request.ReqNo = " + requestTableSelected);
+            ResultSet r = statement.executeQuery("SELECT * FROM request WHERE request.ReqNo = " + requestTableID);
 
             if (r.next()) {
-                createRequest editAcc = new createRequest(this, true, connection, this.AccountNo, r, requestTableSelected);
+                createRequest editAcc = new createRequest(this, true, connection, this.AccountNo, r, requestTableID);
                 editAcc.setLocationRelativeTo(this);
                 editAcc.setVisible(true);
                 initTables();
