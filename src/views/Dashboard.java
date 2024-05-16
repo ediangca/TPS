@@ -36,6 +36,7 @@ public class Dashboard extends javax.swing.JFrame {
 
 //    tables
     DefaultTableModel requestTableModel;
+     DefaultTableModel voucherTableModel;
 
 //    selected tables
     int requestTableID;
@@ -56,8 +57,8 @@ public class Dashboard extends javax.swing.JFrame {
         requestTableModel = (DefaultTableModel) requestTable.getModel();
         requestTable.setModel(requestTableModel);
 
-        requestTableModel = (DefaultTableModel) requestTable.getModel();
-        requestTable.setModel(requestTableModel);
+        voucherTableModel = (DefaultTableModel) voucherTableList.getModel();
+        voucherTableList.setModel(voucherTableModel);
 
         initTables();
     }
@@ -149,7 +150,7 @@ public class Dashboard extends javax.swing.JFrame {
         Voucher = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        voucherTableList = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
@@ -675,11 +676,11 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(transBtn)
                 .addGap(4, 4, 4)
-                .addComponent(transGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(transGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(settingsBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(settingGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(settingGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1156,23 +1157,23 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel35.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel35.setText("Voucher");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        voucherTableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Vocuher No", "Voucher Type", "Amount", "Purpose", "MOP"
+                "Vocuher No", "Voucher Type", "Amount"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable3);
+        jScrollPane2.setViewportView(voucherTableList);
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -2442,7 +2443,7 @@ public class Dashboard extends javax.swing.JFrame {
             createLiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jLabel142, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                .addComponent(jLabel142, javax.swing.GroupLayout.PREFERRED_SIZE, 202, Short.MAX_VALUE)
                 .addGap(609, 609, 609))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
                 .addContainerGap()
@@ -2952,7 +2953,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;
@@ -2990,6 +2990,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel viewStatus;
     private javax.swing.JLabel viewUAT;
     private javax.swing.JLabel viewUsage;
+    private javax.swing.JTable voucherTableList;
     // End of variables declaration//GEN-END:variables
 
     private void showItemPanel(JPanel panelItem) {
@@ -3016,13 +3017,25 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void initTables() {
         requestTableModel.setRowCount(0);
+        voucherTableModel.setRowCount(0);
+        
         try {
-            statement = connection.createStatement();
-            ResultSet r = statement.executeQuery("select * from request");
-            while (r.next()) {
-                Object[] tmp = {r.getString("ReqNo"), r.getString("usage"), r.getString("project"), r.getString("purpose"), r.getString("mop"), r.getDouble("amount"), r.getTimestamp("DateCreated")};
+//            Request table
+            Statement reqStmt = connection.createStatement();
+            ResultSet reqRes = reqStmt.executeQuery("select * from request");
+            while (reqRes.next()) {
+                Object[] tmp = {reqRes.getString("ReqNo"), reqRes.getString("usage"), reqRes.getString("project"), reqRes.getString("purpose"), reqRes.getString("mop"), reqRes.getDouble("amount"), reqRes.getTimestamp("DateCreated")};
                 requestTableModel.addRow(tmp);
                 requestTableModel.fireTableDataChanged();
+            }
+            
+//            voucher table
+            Statement vouchStmt = connection.createStatement();
+            ResultSet res = vouchStmt.executeQuery("SELECT * FROM voucher");
+            while (res.next()) {
+                Object[] tmp = {res.getInt("VoucherNo"), res.getString("VoucherType"), res.getDouble("amount")};
+                voucherTableModel.addRow(tmp);
+                voucherTableModel.fireTableDataChanged();
             }
 
         } catch (Exception e) {

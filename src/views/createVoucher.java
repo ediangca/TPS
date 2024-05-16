@@ -57,10 +57,6 @@ public class createVoucher extends java.awt.Dialog {
         textAMount = new javax.swing.JTextField();
         jLabel89 = new javax.swing.JLabel();
         jLabel98 = new javax.swing.JLabel();
-        textPurpose = new javax.swing.JTextField();
-        jLabel90 = new javax.swing.JLabel();
-        textMOP = new javax.swing.JTextField();
-        jLabel91 = new javax.swing.JLabel();
         refNo = new javax.swing.JTextField();
         jLabel92 = new javax.swing.JLabel();
 
@@ -130,13 +126,6 @@ public class createVoucher extends java.awt.Dialog {
         jLabel98.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel98.setText("Amount");
 
-        jLabel90.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel90.setText("Purpose");
-
-        jLabel91.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel91.setText("Method of Payment");
-        jLabel91.setToolTipText("");
-
         refNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refNoActionPerformed(evt);
@@ -150,46 +139,33 @@ public class createVoucher extends java.awt.Dialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(60, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel92)
                     .addComponent(refNo, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel91)
-                    .addComponent(jLabel90)
                     .addComponent(jLabel89)
                     .addComponent(jLabel98)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(textAMount, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
-                        .addComponent(textPurpose)
-                        .addComponent(textMOP))
+                    .addComponent(textAMount, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textType, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGap(56, 56, 56))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(98, 98, 98)
                 .addComponent(jLabel89)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textType, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel92)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(refNo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel98, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textAMount, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(jLabel90)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textPurpose, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel91)
-                .addGap(5, 5, 5)
-                .addComponent(textMOP, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(124, 124, 124))
         );
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
@@ -214,7 +190,7 @@ public class createVoucher extends java.awt.Dialog {
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -246,10 +222,8 @@ public class createVoucher extends java.awt.Dialog {
         String type = textType.getText();
         String amount = textAMount.getText();
         String reference = refNo.getText();
-        String purpose = textPurpose.getText();
-        String mop = textMOP.getText();
         
-        if (type.isEmpty() || amount.isEmpty() || purpose.isEmpty() || mop.isEmpty() || reference.isEmpty()) {
+        if (type.isEmpty() || amount.isEmpty() || reference.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -298,8 +272,6 @@ public class createVoucher extends java.awt.Dialog {
     private javax.swing.JButton jButton19;
     private javax.swing.JLabel jLabel114;
     private javax.swing.JLabel jLabel89;
-    private javax.swing.JLabel jLabel90;
-    private javax.swing.JLabel jLabel91;
     private javax.swing.JLabel jLabel92;
     private javax.swing.JLabel jLabel98;
     private javax.swing.JPanel jPanel15;
@@ -307,8 +279,6 @@ public class createVoucher extends java.awt.Dialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField refNo;
     private javax.swing.JTextField textAMount;
-    private javax.swing.JTextField textMOP;
-    private javax.swing.JTextField textPurpose;
     private javax.swing.JTextField textType;
     // End of variables declaration//GEN-END:variables
 }
