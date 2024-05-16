@@ -36,10 +36,11 @@ public class Dashboard extends javax.swing.JFrame {
 
 //    tables
     DefaultTableModel requestTableModel;
-     DefaultTableModel voucherTableModel;
+    DefaultTableModel voucherTableModel;
 
 //    selected tables
     int requestTableID;
+    int voucherTableID;
 
     public Dashboard() {
         initComponents();
@@ -156,24 +157,22 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
-        jLabel47 = new javax.swing.JLabel();
-        jLabel48 = new javax.swing.JLabel();
-        jLabel49 = new javax.swing.JLabel();
-        jLabel50 = new javax.swing.JLabel();
-        jLabel51 = new javax.swing.JLabel();
-        jLabel52 = new javax.swing.JLabel();
-        jLabel53 = new javax.swing.JLabel();
-        jLabel54 = new javax.swing.JLabel();
-        jLabel55 = new javax.swing.JLabel();
-        jLabel56 = new javax.swing.JLabel();
-        jLabel57 = new javax.swing.JLabel();
+        VNo = new javax.swing.JLabel();
+        VType = new javax.swing.JLabel();
+        VAmount = new javax.swing.JLabel();
+        VPurpose = new javax.swing.JLabel();
+        VRNo = new javax.swing.JLabel();
+        VReqNo = new javax.swing.JLabel();
+        VANo = new javax.swing.JLabel();
+        VStatus = new javax.swing.JLabel();
+        VCAT = new javax.swing.JLabel();
+        VUAT = new javax.swing.JLabel();
         jButton18 = new javax.swing.JButton();
         jButton28 = new javax.swing.JButton();
         Branch = new javax.swing.JPanel();
@@ -1173,6 +1172,11 @@ public class Dashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        voucherTableList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                voucherTableListMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(voucherTableList);
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
@@ -1188,9 +1192,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel39.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel39.setText("Purpose:");
-
-        jLabel40.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel40.setText("Method of Payment:");
 
         jLabel41.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel41.setText("Reference No:");
@@ -1210,28 +1211,6 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel46.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel46.setText("Updated At:");
 
-        jLabel47.setText("Voucher No");
-
-        jLabel48.setText("Voucher Type");
-
-        jLabel49.setText("Amount");
-
-        jLabel50.setText("Purpose");
-
-        jLabel51.setText("Method of Payment");
-
-        jLabel52.setText("Reference No");
-
-        jLabel53.setText("Request No");
-
-        jLabel54.setText("Account No");
-
-        jLabel55.setText("Status");
-
-        jLabel56.setText("Created At");
-
-        jLabel57.setText("Upated At");
-
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -1243,26 +1222,27 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel37)
                     .addComponent(jLabel38)
                     .addComponent(jLabel39)
-                    .addComponent(jLabel40)
                     .addComponent(jLabel41))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel52)
-                    .addComponent(jLabel51)
-                    .addComponent(jLabel50)
-                    .addComponent(jLabel49)
-                    .addComponent(jLabel48)
-                    .addComponent(jLabel47))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(65, 65, 65)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(VNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(VAmount, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                    .addComponent(VType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(VPurpose, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                    .addComponent(VRNo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel46)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel57))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel42)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel53))
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel42)
+                                .addGap(18, 18, 18)
+                                .addComponent(VReqNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel46)
+                                .addGap(18, 18, 18)
+                                .addComponent(VUAT, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(41, 41, 41))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel43)
@@ -1270,10 +1250,14 @@ public class Dashboard extends javax.swing.JFrame {
                             .addComponent(jLabel45))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel56)
-                            .addComponent(jLabel55)
-                            .addComponent(jLabel54))))
-                .addGap(162, 162, 162))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(VCAT, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(VANo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(VStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(88, 88, 88))))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1282,40 +1266,40 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel36)
                     .addComponent(jLabel42)
-                    .addComponent(jLabel47)
-                    .addComponent(jLabel53))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel37)
-                        .addComponent(jLabel48))
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel54)))
+                    .addComponent(VNo)
+                    .addComponent(VReqNo))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(VType, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(VANo))
+                            .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel38)
                     .addComponent(jLabel44)
-                    .addComponent(jLabel49)
-                    .addComponent(jLabel55))
+                    .addComponent(VStatus)
+                    .addComponent(VAmount))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel45)
+                    .addComponent(VPurpose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel39)
+                    .addComponent(VCAT))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel39)
-                        .addComponent(jLabel50)
-                        .addComponent(jLabel56)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel40)
-                    .addComponent(jLabel46)
-                    .addComponent(jLabel51)
-                    .addComponent(jLabel57))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel41)
-                    .addComponent(jLabel52))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(jLabel41)
+                        .addComponent(VRNo))
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel46)
+                        .addComponent(VUAT, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51))
         );
 
         jButton18.setBackground(new java.awt.Color(0, 102, 204));
@@ -1371,7 +1355,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
 
@@ -2663,7 +2647,7 @@ public class Dashboard extends javax.swing.JFrame {
         createVoucher createvoucher = new createVoucher(this, true, this.requestTableID, this.AccountNo, this.connection);
         createvoucher.setLocationRelativeTo(this);
         createvoucher.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton24ActionPerformed
 
     private void jTextField20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField20ActionPerformed
@@ -2721,6 +2705,31 @@ public class Dashboard extends javax.swing.JFrame {
         searchReqText.setText(null);
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void voucherTableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voucherTableListMouseClicked
+        // TODO add your handling code here:
+        voucherTableID = Integer.parseInt(voucherTableList.getValueAt(voucherTableList.getSelectedRow(), 0).toString());
+
+        try {
+            Statement vouchStmt = connection.createStatement();
+            ResultSet res = vouchStmt.executeQuery("SELECT * FROM voucher LEFT JOIN request ON voucher.ReqNo = request.ReqNo WHERE VoucherNo = " + voucherTableID);
+            
+            while (res.next()) {                
+                VNo.setText(res.getString("VoucherNo"));
+                VType.setText(res.getString("VoucherType"));
+                VAmount.setText(res.getString("voucher.amount"));
+                VPurpose.setText(res.getString("purpose"));
+                VRNo.setText(res.getString("REFNo"));
+                VReqNo.setText(res.getString("ReqNo"));
+                VANo.setText(res.getString("AccNo"));
+                VStatus.setText(res.getString("status"));
+                VCAT.setText(res.getTimestamp("DateCreated").toString());
+                VUAT.setText(res.getTimestamp("DateUpdated").toString());
+                
+            }
+        } catch (SQLException e) {
+        }
+    }//GEN-LAST:event_voucherTableListMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2767,6 +2776,16 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton Role;
     private javax.swing.JButton Role1;
     private javax.swing.JPanel Roles;
+    private javax.swing.JLabel VANo;
+    private javax.swing.JLabel VAmount;
+    private javax.swing.JLabel VCAT;
+    private javax.swing.JLabel VNo;
+    private javax.swing.JLabel VPurpose;
+    private javax.swing.JLabel VRNo;
+    private javax.swing.JLabel VReqNo;
+    private javax.swing.JLabel VStatus;
+    private javax.swing.JLabel VType;
+    private javax.swing.JLabel VUAT;
     private javax.swing.JPanel Voucher;
     private javax.swing.JButton btnClose;
     private javax.swing.JPanel card;
@@ -2865,24 +2884,12 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
-    private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
-    private javax.swing.JLabel jLabel49;
-    private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel52;
-    private javax.swing.JLabel jLabel53;
-    private javax.swing.JLabel jLabel54;
-    private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel56;
-    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
@@ -3018,7 +3025,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void initTables() {
         requestTableModel.setRowCount(0);
         voucherTableModel.setRowCount(0);
-        
+
         try {
 //            Request table
             Statement reqStmt = connection.createStatement();
@@ -3028,7 +3035,7 @@ public class Dashboard extends javax.swing.JFrame {
                 requestTableModel.addRow(tmp);
                 requestTableModel.fireTableDataChanged();
             }
-            
+
 //            voucher table
             Statement vouchStmt = connection.createStatement();
             ResultSet res = vouchStmt.executeQuery("SELECT * FROM voucher");
