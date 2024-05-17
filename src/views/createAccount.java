@@ -28,30 +28,34 @@ public class createAccount extends java.awt.Dialog {
     Statement statement;
     ResultSet result;
     CallableStatement cstmt;
+
     private int accountNo;
+    boolean isEdit = false;
+    int id;
 
-   
-
-    public createAccount(java.awt.Frame parent, boolean modal, Connection connection) {
+    public createAccount(java.awt.Frame parent, boolean modal, Connection connection, Boolean isEdit, int id) {
         super(parent, modal);
         initComponents();
         this.connection = connection;
 
+        this.isEdit = isEdit;
+        this.id = id;
+
         initCombos();
+        if (isEdit) {
+            initData();
+            username.setFocusable(false);
+        }
     }
 
-    public createAccount(java.awt.Frame parent, boolean modal, Connection connection, ResultSet res) {
-        super(parent, modal);
-        initComponents();
-        this.connection = connection;
-
-        
-        initCombos();
-
-     
-       
-    }
-
+//    public createAccount(java.awt.Frame parent, boolean modal, Connection connection, int accNo) {
+//        super(parent, modal);
+//        initComponents();
+//
+//        this.connection = connection;
+//        this.accountNo = accNo;
+//        initCombos();
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -351,35 +355,11 @@ public class createAccount extends java.awt.Dialog {
         String contactNo = this.contactNumber.getText();
         String address = this.address.getText();
 
-        if (username.isEmpty() || password.isEmpty() || firstname.isEmpty() || middleInitial.isEmpty() || lastname.isEmpty() || email.isEmpty() || contactNo.isEmpty() || address.isEmpty()
-                || roleCombo <= 0 || branchCombo <= 0) {
+        if (isEdit) {
+            editAcc(username, password, firstname, middleInitial, lastname, email, contactNo, address, timestamp);
 
-            JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        try {
-            cstmt = connection.prepareCall("{call `insert.Accounts`(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
-            //Setting values for the IN parameters of the procedure
-            cstmt.setString(1, username);
-            cstmt.setString(2, password);
-            cstmt.setString(3, getRoleNo(comboRole.getSelectedItem().toString()));
-            cstmt.setString(4, getBranchNo(comboBranch.getSelectedItem().toString()));
-            cstmt.setString(5, lastname);
-            cstmt.setString(6, firstname);
-            cstmt.setString(7, middleInitial);
-            cstmt.setString(8, address);
-            cstmt.setString(9, contactNo);
-            cstmt.setString(10, email);
-            cstmt.setTimestamp(11, timestamp);
-            cstmt.setTimestamp(12, timestamp);
-            cstmt.setInt(13, -1);
-            cstmt.execute();
-
-            JOptionPane.showMessageDialog(this, "User Successfully Addded", "Success", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            createAcc(username, password, roleCombo, branchCombo, firstname, middleInitial, lastname, email, contactNo, address, timestamp);
         }
     }//GEN-LAST:event_jButton19ActionPerformed
 
@@ -478,5 +458,100 @@ public class createAccount extends java.awt.Dialog {
         }
 
         return "";
+    }
+
+    private void editAcc(String username, String password, String firstname, String middleInitial, String lastname, String email, String contactNo, String address, Timestamp timestamp) {
+        try {
+
+//   IN p_AccNo INT,
+//   IN p_username VARCHAR(45),
+//   IN p_password VARCHAR(45),
+//   IN p_NewRole VARCHAR(45),
+//   IN p_NewBranch VARCHAR(45),
+//   IN p_lastname VARCHAR(45),
+//   IN p_firstname VARCHAR(45),
+//   IN p_mi VARCHAR(45),
+//   IN p_address VARCHAR(45),
+//   IN p_contactNo VARCHAR(10),
+//   IN p_email VARCHAR(45),
+//   IN p_DateUpdated DATETIME)
+            cstmt = connection.prepareCall("UPDATE accounts SET password = ?, roleNo = ?, branchNo = ?, lastname = ?, firstname = ?, mi = ?, address = ?, contactNo = ?, email = ?, DateUpdated = ? WHERE AccNo = ?");
+            cstmt.setString(1, password);
+            cstmt.setString(2, getRoleNo(comboRole.getSelectedItem().toString()));
+            cstmt.setString(3, getBranchNo(comboBranch.getSelectedItem().toString()));
+            cstmt.setString(4, lastname);
+            cstmt.setString(5, firstname);
+            cstmt.setString(6, middleInitial);
+            cstmt.setString(7, address);
+            cstmt.setString(8, contactNo);
+            cstmt.setString(9, email);
+            cstmt.setTimestamp(10, timestamp);
+            cstmt.setInt(11, this.id);
+
+            cstmt.execute();
+            
+            
+            JOptionPane.showMessageDialog(this, "Account Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createAcc(String username, String password, int roleCombo, int branchCombo, String firstname, String middleInitial, String lastname, String email, String contactNo, String address, Timestamp timestamp) {
+        if (username.isEmpty() || password.isEmpty() || firstname.isEmpty() || middleInitial.isEmpty() || lastname.isEmpty() || email.isEmpty() || contactNo.isEmpty() || address.isEmpty()
+                || roleCombo <= 0 || branchCombo <= 0) {
+
+            JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            cstmt = connection.prepareCall("{call `insert.Accounts`(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+            //Setting values for the IN parameters of the procedure
+            cstmt.setString(1, username);
+            cstmt.setString(2, password);
+            cstmt.setString(3, getRoleNo(comboRole.getSelectedItem().toString()));
+            cstmt.setString(4, getBranchNo(comboBranch.getSelectedItem().toString()));
+            cstmt.setString(5, lastname);
+            cstmt.setString(6, firstname);
+            cstmt.setString(7, middleInitial);
+            cstmt.setString(8, address);
+            cstmt.setString(9, contactNo);
+            cstmt.setString(10, email);
+            cstmt.setTimestamp(11, timestamp);
+            cstmt.setTimestamp(12, timestamp);
+            cstmt.setInt(13, this.accountNo);
+            cstmt.execute();
+
+            JOptionPane.showMessageDialog(this, "User Successfully Addded", "Success", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void initData() {
+        ResultSet res;
+        try {
+            res = statement.executeQuery("select username, lastname, firstname, mi, `password`, `role`.`Role`, email, `branch`.`Branch`, contactNo, accounts.address  from accounts join `role` join branch where accounts.AccNo =" + this.id);
+
+            while (res.next()) {
+                firstname.setText(res.getString("firstname"));
+                lastname.setText(res.getString("lastname"));
+                middleInitial.setText(res.getString("mi"));
+                username.setText(res.getString("username"));
+                password.setText(res.getString("password"));
+                comboRole.setSelectedItem(res.getString("role"));
+                comboBranch.setSelectedItem(res.getString("branch"));
+                email.setText(res.getString("email"));
+                contactNumber.setText(res.getString("contactNo"));
+                address.setText(res.getString("address"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(createAccount.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
