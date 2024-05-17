@@ -3067,7 +3067,7 @@ public class Dashboard extends javax.swing.JFrame {
 
 //            account table
             Statement accStmt = connection.createStatement();
-            ResultSet accRes = accStmt.executeQuery("SELECT accounts.AccNo, accounts.username, `role`.`Role`, `branch`.`Branch`, accounts.address, accounts.email FROM accounts JOIN `role` ON accounts.AccNo = `role`.AccNo JOIN branch ON accounts.AccNo = branch.AccNo;");
+            ResultSet accRes = accStmt.executeQuery("SELECT accounts.AccNo, accounts.username, `role`.`Role`, `branch`.`Branch`, accounts.address, accounts.email FROM accounts JOIN `role` JOIN branch;");
             while (accRes.next()) {
                 Object[] tmp = {accRes.getInt("AccNo"), accRes.getString("username"), accRes.getString("role"), accRes.getString("branch"), accRes.getString("address"), accRes.getString("email")};
                 accountTableModel.addRow(tmp);
