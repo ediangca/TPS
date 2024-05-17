@@ -37,10 +37,12 @@ public class Dashboard extends javax.swing.JFrame {
 //    tables
     DefaultTableModel requestTableModel;
     DefaultTableModel voucherTableModel;
+    DefaultTableModel accountTableModel;
 
 //    selected tables
     int requestTableID;
     int voucherTableID;
+    int accountTableID;
 
     public Dashboard() {
         initComponents();
@@ -60,6 +62,9 @@ public class Dashboard extends javax.swing.JFrame {
 
         voucherTableModel = (DefaultTableModel) voucherTableList.getModel();
         voucherTableList.setModel(voucherTableModel);
+
+        accountTableModel = (DefaultTableModel) accountListTable.getModel();
+        accountListTable.setModel(accountTableModel);
 
         initTables();
     }
@@ -193,16 +198,16 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel74 = new javax.swing.JLabel();
         jLabel75 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField17 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        branchName = new javax.swing.JTextField();
+        branchAddress = new javax.swing.JTextField();
+        saveBranchBtn = new javax.swing.JButton();
         jLabel65 = new javax.swing.JLabel();
         jLabel66 = new javax.swing.JLabel();
         jLabel67 = new javax.swing.JLabel();
         Accounts = new javax.swing.JPanel();
         jLabel68 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable5 = new javax.swing.JTable();
+        accountListTable = new javax.swing.JTable();
         jTextField8 = new javax.swing.JTextField();
         jButton10 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
@@ -1469,9 +1474,14 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton5.setBackground(new java.awt.Color(0, 102, 204));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Save");
+        saveBranchBtn.setBackground(new java.awt.Color(0, 102, 204));
+        saveBranchBtn.setForeground(new java.awt.Color(255, 255, 255));
+        saveBranchBtn.setText("Save");
+        saveBranchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBranchBtnActionPerformed(evt);
+            }
+        });
 
         jLabel65.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel65.setText("Branch name:");
@@ -1489,12 +1499,12 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveBranchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel65)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField17)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(branchAddress)
+                            .addComponent(branchName, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jLabel66)))
                 .addGap(32, 32, 32))
             .addGroup(jPanel11Layout.createSequentialGroup()
@@ -1510,13 +1520,13 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel65)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(branchName, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(jLabel66)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(branchAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(saveBranchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
 
@@ -1560,23 +1570,23 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel68.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel68.setText("Accounts");
 
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+        accountListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Account No", "Username", "Role", "Branch", "Address", "Email", "Contact No"
+                "Account No", "Username", "Role", "Branch", "Address", "Email"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane5.setViewportView(jTable5);
+        jScrollPane5.setViewportView(accountListTable);
 
         jButton10.setBackground(new java.awt.Color(0, 102, 204));
         jButton10.setForeground(new java.awt.Color(255, 255, 255));
@@ -2604,6 +2614,7 @@ public class Dashboard extends javax.swing.JFrame {
         createaccount.setAccountNo(this.AccountNo);
         createaccount.setLocationRelativeTo(this);
         createaccount.setVisible(true);
+        initTables();
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
@@ -2712,8 +2723,8 @@ public class Dashboard extends javax.swing.JFrame {
         try {
             Statement vouchStmt = connection.createStatement();
             ResultSet res = vouchStmt.executeQuery("SELECT * FROM voucher LEFT JOIN request ON voucher.ReqNo = request.ReqNo WHERE VoucherNo = " + voucherTableID);
-            
-            while (res.next()) {                
+
+            while (res.next()) {
                 VNo.setText(res.getString("VoucherNo"));
                 VType.setText(res.getString("VoucherType"));
                 VAmount.setText(res.getString("voucher.amount"));
@@ -2724,11 +2735,20 @@ public class Dashboard extends javax.swing.JFrame {
                 VStatus.setText(res.getString("status"));
                 VCAT.setText(res.getTimestamp("DateCreated").toString());
                 VUAT.setText(res.getTimestamp("DateUpdated").toString());
-                
+
             }
         } catch (SQLException e) {
         }
     }//GEN-LAST:event_voucherTableListMouseClicked
+
+    private void saveBranchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBranchBtnActionPerformed
+        String branch = branchName.getText();
+        String address = branchAddress.getText();
+
+        if (branch.isEmpty() || address.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_saveBranchBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2787,6 +2807,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel VType;
     private javax.swing.JLabel VUAT;
     private javax.swing.JPanel Voucher;
+    private javax.swing.JTable accountListTable;
+    private javax.swing.JTextField branchAddress;
+    private javax.swing.JTextField branchName;
     private javax.swing.JButton btnClose;
     private javax.swing.JPanel card;
     private javax.swing.JPanel card1;
@@ -2815,7 +2838,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -2961,22 +2983,20 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;
     private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
     private javax.swing.JTable jTable9;
     private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField19;
     private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JDialog listDialog;
     private javax.swing.JTable requestTable;
+    private javax.swing.JButton saveBranchBtn;
     private javax.swing.JTextField searchReqText;
     private javax.swing.JPanel settingGroup;
     private javax.swing.JButton settingsBtn;
@@ -3043,6 +3063,15 @@ public class Dashboard extends javax.swing.JFrame {
                 Object[] tmp = {res.getInt("VoucherNo"), res.getString("VoucherType"), res.getDouble("amount")};
                 voucherTableModel.addRow(tmp);
                 voucherTableModel.fireTableDataChanged();
+            }
+
+//            account table
+            Statement accStmt = connection.createStatement();
+            ResultSet accRes = accStmt.executeQuery("SELECT accounts.AccNo, accounts.username, `role`.`Role`, `branch`.`Branch`, accounts.address, accounts.email FROM accounts JOIN `role` ON accounts.AccNo = `role`.AccNo JOIN branch ON accounts.AccNo = branch.AccNo;");
+            while (accRes.next()) {
+                Object[] tmp = {accRes.getInt("AccNo"), accRes.getString("username"), accRes.getString("role"), accRes.getString("branch"), accRes.getString("address"), accRes.getString("email")};
+                accountTableModel.addRow(tmp);
+                accountTableModel.fireTableDataChanged();
             }
 
         } catch (Exception e) {
