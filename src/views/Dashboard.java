@@ -2627,7 +2627,23 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-   
+        try {
+            accountTableModel.setRowCount(0);
+            String query = "'%" + searchAcc.getText() + "%'";
+            statement = connection.createStatement();
+            
+//            System.out.println("SELECT a.AccNo, a.username, r.`Role`, b.`Branch`, a.address, a.address FROM accounts a JOIN branch b ON b.BranchNo = a.BranchNo JOIN `role` r ON r.RoleNo = a.RoleNo WHERE a.username LIKE " +query+ " OR a.email LIKE " +query+ " OR a.address LIKE " +query+ ";");
+            ResultSet accRes = statement.executeQuery("SELECT a.AccNo, a.username, r.`Role`, b.`Branch`, a.address, a.email FROM accounts a JOIN branch b ON b.BranchNo = a.BranchNo JOIN `role` r ON r.RoleNo = a.RoleNo WHERE a.username LIKE " +query+ " OR a.email LIKE " +query+ " OR a.address LIKE " +query+ ";");
+
+            while (accRes.next()) {
+                Object[] tmp = {accRes.getInt("AccNo"), accRes.getString("username"), accRes.getString("Role"), accRes.getString("branch"), accRes.getString("address"), accRes.getString("email")};
+                accountTableModel.addRow(tmp);
+                accountTableModel.fireTableDataChanged();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
@@ -2709,7 +2725,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please select an item", "Select Item", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         createAccount editAcc = new createAccount(this, true, connection, true, accountTableID);
         System.out.println(accountTableID);
         editAcc.setLocationRelativeTo(null);
@@ -2788,7 +2804,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_saveBranchBtnActionPerformed
 
     private void accountListTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountListTableMouseClicked
-       accountTableID = Integer.parseInt(accountListTable.getValueAt(accountListTable.getSelectedRow(), 0).toString());
+        accountTableID = Integer.parseInt(accountListTable.getValueAt(accountListTable.getSelectedRow(), 0).toString());
     }//GEN-LAST:event_accountListTableMouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -2799,12 +2815,12 @@ public class Dashboard extends javax.swing.JFrame {
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
         String role = createRole.getText();
-        
+
         if (role.isEmpty()) {
-             JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
-             return;
+            JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        
+
         try {
             cstmt = connection.prepareCall("INSERT INTO role(Role, DateCreated, DateUpdated, AccNo) VALUES (?, ?, ?, ?)");
             cstmt.setString(1, role);
@@ -2812,11 +2828,11 @@ public class Dashboard extends javax.swing.JFrame {
             cstmt.setTimestamp(3, DateMaker.getTime());
             cstmt.setInt(4, this.AccountNo);
             cstmt.execute();
-            
-             JOptionPane.showMessageDialog(this, "Role Added Success", "Role Added", JOptionPane.INFORMATION_MESSAGE);
+
+            JOptionPane.showMessageDialog(this, "Role Added Success", "Role Added", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException e) {
         }
-        
+
     }//GEN-LAST:event_jButton15ActionPerformed
 
     /**
@@ -3138,19 +3154,18 @@ public class Dashboard extends javax.swing.JFrame {
 
 //            account table
             Statement accStmt = connection.createStatement();
-            ResultSet accRes = accStmt.executeQuery("SELECT accounts.AccNo, accounts.username, `role`.`Role`, `branch`.`Branch`, accounts.address, accounts.email FROM accounts JOIN `role` JOIN branch");
+            ResultSet accRes = accStmt.executeQuery("SELECT a.AccNo, a.username, r.`Role`, b.`Branch`, a.address, a.email FROM accounts a JOIN branch b ON b.BranchNo = a.BranchNo JOIN `role` r ON r.RoleNo = a.RoleNo;");
             while (accRes.next()) {
                 Object[] tmp = {accRes.getInt("AccNo"), accRes.getString("username"), accRes.getString("Role"), accRes.getString("branch"), accRes.getString("address"), accRes.getString("email")};
-                accountTableModel.addRow(tmp);
-                accountTableModel.fireTableDataChanged();
-            }
 
-        } catch (Exception e) {
+                accountTableModel.addRow(tmp);
+        
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    
     private String getRoleNo(String role) {
         try {
 
