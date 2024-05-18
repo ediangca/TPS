@@ -200,12 +200,12 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel62 = new javax.swing.JLabel();
         jLabel63 = new javax.swing.JLabel();
         jLabel64 = new javax.swing.JLabel();
-        jLabel70 = new javax.swing.JLabel();
-        jLabel71 = new javax.swing.JLabel();
-        jLabel72 = new javax.swing.JLabel();
-        jLabel73 = new javax.swing.JLabel();
-        jLabel74 = new javax.swing.JLabel();
-        jLabel75 = new javax.swing.JLabel();
+        b_branchNo = new javax.swing.JLabel();
+        b_branch = new javax.swing.JLabel();
+        b_address = new javax.swing.JLabel();
+        b_createdAt = new javax.swing.JLabel();
+        b_updatedAt = new javax.swing.JLabel();
+        b_created_by = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         branchName = new javax.swing.JTextField();
         branchAddress = new javax.swing.JTextField();
@@ -233,21 +233,21 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel80 = new javax.swing.JLabel();
         jLabel82 = new javax.swing.JLabel();
         jLabel83 = new javax.swing.JLabel();
-        jLabel84 = new javax.swing.JLabel();
-        jLabel85 = new javax.swing.JLabel();
-        jLabel86 = new javax.swing.JLabel();
-        jLabel87 = new javax.swing.JLabel();
-        jLabel88 = new javax.swing.JLabel();
-        jLabel90 = new javax.swing.JLabel();
-        jLabel91 = new javax.swing.JLabel();
+        v_accNo = new javax.swing.JLabel();
+        v_username = new javax.swing.JLabel();
+        v_firstname = new javax.swing.JLabel();
+        v_lastname = new javax.swing.JLabel();
+        v_initial = new javax.swing.JLabel();
+        v_email = new javax.swing.JLabel();
+        v_contactNo = new javax.swing.JLabel();
         jLabel92 = new javax.swing.JLabel();
-        jLabel93 = new javax.swing.JLabel();
+        v_createdAt = new javax.swing.JLabel();
         jLabel94 = new javax.swing.JLabel();
-        jLabel95 = new javax.swing.JLabel();
+        v_updatedAt = new javax.swing.JLabel();
         jLabel96 = new javax.swing.JLabel();
-        jLabel97 = new javax.swing.JLabel();
+        v_createdBy = new javax.swing.JLabel();
         jLabel118 = new javax.swing.JLabel();
-        jLabel119 = new javax.swing.JLabel();
+        v_branch = new javax.swing.JLabel();
         jButton14 = new javax.swing.JButton();
         Roles = new javax.swing.JPanel();
         jLabel107 = new javax.swing.JLabel();
@@ -1395,6 +1395,11 @@ public class Dashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        branchTableList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                branchTableListMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(branchTableList);
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
@@ -1417,17 +1422,17 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel64.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel64.setText("Created By:");
 
-        jLabel70.setText("Branch No");
+        b_branchNo.setText("Branch No");
 
-        jLabel71.setText("Branch");
+        b_branch.setText("Branch");
 
-        jLabel72.setText("Address");
+        b_address.setText("Address");
 
-        jLabel73.setText("Created At");
+        b_createdAt.setText("Created At");
 
-        jLabel74.setText("Updated At");
+        b_updatedAt.setText("Updated At");
 
-        jLabel75.setText("Created By");
+        b_created_by.setText("Created By");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -1444,12 +1449,12 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel64))
                 .addGap(23, 23, 23)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel72, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel73, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel74, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                    .addComponent(jLabel75, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel71, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel70, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(b_address, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_createdAt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_updatedAt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_created_by, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_branch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_branchNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -1457,29 +1462,29 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel70, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(b_branchNo, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel59, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel60)
-                    .addComponent(jLabel71))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(b_branch))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel61)
-                    .addComponent(jLabel72))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(b_address))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel62)
-                    .addComponent(jLabel73))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(b_createdAt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel63)
-                    .addComponent(jLabel74))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(b_updatedAt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel64)
-                    .addComponent(jLabel75))
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addComponent(b_created_by))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
@@ -1507,7 +1512,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(44, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(saveBranchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1553,10 +1558,11 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(BranchLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(BranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(BranchLayout.createSequentialGroup()
+                                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         BranchLayout.setVerticalGroup(
@@ -1565,14 +1571,15 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(BranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(BranchLayout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3))
-                .addContainerGap())
+                        .addGap(44, 44, 44)
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(BranchLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         content.add(Branch, "branch");
@@ -1728,39 +1735,39 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel83.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel83.setText("Contact No:");
 
-        jLabel84.setText("Account No");
+        v_accNo.setText("Account No");
 
-        jLabel85.setText("Username");
+        v_username.setText("Username");
 
-        jLabel86.setText("Firstname");
+        v_firstname.setText("Firstname");
 
-        jLabel87.setText("Lastname");
+        v_lastname.setText("Lastname");
 
-        jLabel88.setText("Middle Initial");
+        v_initial.setText("Middle Initial");
 
-        jLabel90.setText("Email");
+        v_email.setText("Email");
 
-        jLabel91.setText("Contact No");
+        v_contactNo.setText("Contact No");
 
         jLabel92.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel92.setText("Created At:");
 
-        jLabel93.setText("Created At");
+        v_createdAt.setText("Created At");
 
         jLabel94.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel94.setText("Updated At:");
 
-        jLabel95.setText("Updated At");
+        v_updatedAt.setText("Updated At");
 
         jLabel96.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel96.setText("Created By:");
 
-        jLabel97.setText("Created By");
+        v_createdBy.setText("Created By");
 
         jLabel118.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel118.setText("Branch:");
 
-        jLabel119.setText("Branch");
+        v_branch.setText("Branch");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -1782,17 +1789,17 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel118))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel119)
-                    .addComponent(jLabel97)
-                    .addComponent(jLabel95)
-                    .addComponent(jLabel93)
-                    .addComponent(jLabel91)
-                    .addComponent(jLabel90)
-                    .addComponent(jLabel87)
-                    .addComponent(jLabel86)
-                    .addComponent(jLabel85)
-                    .addComponent(jLabel84)
-                    .addComponent(jLabel88))
+                    .addComponent(v_branch)
+                    .addComponent(v_createdBy)
+                    .addComponent(v_updatedAt)
+                    .addComponent(v_createdAt)
+                    .addComponent(v_contactNo)
+                    .addComponent(v_email)
+                    .addComponent(v_lastname)
+                    .addComponent(v_firstname)
+                    .addComponent(v_username)
+                    .addComponent(v_accNo)
+                    .addComponent(v_initial))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
@@ -1801,49 +1808,49 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel76)
-                    .addComponent(jLabel84))
+                    .addComponent(v_accNo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel77)
-                    .addComponent(jLabel85))
+                    .addComponent(v_username))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel78)
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(jLabel86, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(v_firstname, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel79)
-                    .addComponent(jLabel87))
+                    .addComponent(v_lastname))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel80)
-                    .addComponent(jLabel88))
+                    .addComponent(v_initial))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel82)
-                    .addComponent(jLabel90))
+                    .addComponent(v_email))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel83)
-                    .addComponent(jLabel91))
+                    .addComponent(v_contactNo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel118)
-                    .addComponent(jLabel119))
+                    .addComponent(v_branch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel96)
-                    .addComponent(jLabel97))
+                    .addComponent(v_createdBy))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel92)
-                    .addComponent(jLabel93))
+                    .addComponent(v_createdAt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel94)
-                    .addComponent(jLabel95, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(v_updatedAt, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -2660,8 +2667,34 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
-        contentCards.show(content, "viewAcc");
+
+        if (accountTableID <= 0) {
+            JOptionPane.showMessageDialog(this, "No Account Selected", "Account Not Found", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Statement vStmt = connection.createStatement();
+            ResultSet res = vStmt   .executeQuery("SELECT a.AccNo, a.username, a.firstname, a.mi, a.lastname, a.email, a.contactNo, b.Branch, a.DateCreated, a.DateUpdated, c.username AS creator FROM accounts a JOIN branch b ON a.BranchNo = b.BranchNo JOIN accounts c ON c.AccNo = a.CreatedBy WHERE a.AccNo = " + accountTableID);
+
+            if (res.next()) {
+                v_accNo.setText(res.getString("AccNo"));
+                v_username.setText(res.getString("username"));
+                v_firstname.setText(res.getString("firstname"));
+                v_lastname.setText(res.getString("lastname"));
+                v_initial.setText(res.getString("mi"));
+                v_email.setText(res.getString("email"));
+                v_contactNo.setText(res.getString("contactNo"));
+                v_branch.setText(res.getString("branch"));
+                v_createdAt.setText(res.getString("DateCreated"));
+                v_updatedAt.setText(res.getString("DateUpdated"));
+                v_createdBy.setText(res.getString("creator"));
+            }
+
+            contentCards.show(content, "viewAcc");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jButton12ActionPerformed
 
@@ -2890,6 +2923,26 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_roleTableListMouseClicked
 
+    private void branchTableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_branchTableListMouseClicked
+        int ID = Integer.parseInt(branchTableList.getValueAt(branchTableList.getSelectedRow(), 0).toString());
+
+        try {
+            Statement branchStmt = connection.createStatement();
+            ResultSet branchRes = branchStmt.executeQuery("SELECT * FROM branch b JOIN accounts a ON b.AccNo = a.AccNo WHERE b.BranchNo = " + ID);
+
+            if (branchRes.next()) {
+                b_branchNo.setText(branchRes.getString("BranchNo"));
+                b_branch.setText(branchRes.getString("branch"));
+                b_address.setText(branchRes.getString("address"));
+                b_createdAt.setText(branchRes.getString("DateCreated"));
+                b_updatedAt.setText(branchRes.getString("DateUpdated"));
+                b_created_by.setText(branchRes.getString("username"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_branchTableListMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2948,6 +3001,12 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel VUAT;
     private javax.swing.JPanel Voucher;
     private javax.swing.JTable accountListTable;
+    private javax.swing.JLabel b_address;
+    private javax.swing.JLabel b_branch;
+    private javax.swing.JLabel b_branchNo;
+    private javax.swing.JLabel b_createdAt;
+    private javax.swing.JLabel b_created_by;
+    private javax.swing.JLabel b_updatedAt;
     private javax.swing.JTextField branchAddress;
     private javax.swing.JTextField branchName;
     private javax.swing.JTable branchTableList;
@@ -2997,7 +3056,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel115;
     private javax.swing.JLabel jLabel117;
     private javax.swing.JLabel jLabel118;
-    private javax.swing.JLabel jLabel119;
     private javax.swing.JLabel jLabel120;
     private javax.swing.JLabel jLabel121;
     private javax.swing.JLabel jLabel122;
@@ -3065,12 +3123,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel69;
-    private javax.swing.JLabel jLabel70;
-    private javax.swing.JLabel jLabel71;
-    private javax.swing.JLabel jLabel72;
-    private javax.swing.JLabel jLabel73;
-    private javax.swing.JLabel jLabel74;
-    private javax.swing.JLabel jLabel75;
     private javax.swing.JLabel jLabel76;
     private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
@@ -3079,19 +3131,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel83;
-    private javax.swing.JLabel jLabel84;
-    private javax.swing.JLabel jLabel85;
-    private javax.swing.JLabel jLabel86;
-    private javax.swing.JLabel jLabel87;
-    private javax.swing.JLabel jLabel88;
-    private javax.swing.JLabel jLabel90;
-    private javax.swing.JLabel jLabel91;
     private javax.swing.JLabel jLabel92;
-    private javax.swing.JLabel jLabel93;
     private javax.swing.JLabel jLabel94;
-    private javax.swing.JLabel jLabel95;
     private javax.swing.JLabel jLabel96;
-    private javax.swing.JLabel jLabel97;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -3145,6 +3187,17 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton transBtn;
     private javax.swing.JPanel transGroup;
     private javax.swing.JLabel userWelcome;
+    private javax.swing.JLabel v_accNo;
+    private javax.swing.JLabel v_branch;
+    private javax.swing.JLabel v_contactNo;
+    private javax.swing.JLabel v_createdAt;
+    private javax.swing.JLabel v_createdBy;
+    private javax.swing.JLabel v_email;
+    private javax.swing.JLabel v_firstname;
+    private javax.swing.JLabel v_initial;
+    private javax.swing.JLabel v_lastname;
+    private javax.swing.JLabel v_updatedAt;
+    private javax.swing.JLabel v_username;
     private javax.swing.JPanel viewAccount;
     private javax.swing.JLabel viewAmount;
     private javax.swing.JLabel viewCAT;

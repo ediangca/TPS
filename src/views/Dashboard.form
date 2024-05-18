@@ -1763,11 +1763,13 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jPanel11" max="32767" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jScrollPane3" min="-2" pref="471" max="-2" attributes="0"/>
+                                  </Group>
                                   <Component id="jPanel10" max="32767" attributes="0"/>
-                                  <Component id="jPanel11" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jScrollPane3" min="-2" pref="471" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -1780,16 +1782,18 @@
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jLabel58" min="-2" pref="39" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                               <Component id="jPanel11" min="-2" pref="269" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane3" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                              <Component id="jScrollPane3" min="-2" pref="327" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="14" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1817,6 +1821,9 @@
                       </Table>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="branchTableListMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -1842,12 +1849,12 @@
                           </Group>
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel72" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel73" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel74" alignment="0" pref="156" max="32767" attributes="0"/>
-                              <Component id="jLabel75" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel71" max="32767" attributes="0"/>
-                              <Component id="jLabel70" alignment="0" max="32767" attributes="0"/>
+                              <Component id="b_address" alignment="0" max="32767" attributes="0"/>
+                              <Component id="b_createdAt" alignment="0" max="32767" attributes="0"/>
+                              <Component id="b_updatedAt" alignment="0" max="32767" attributes="0"/>
+                              <Component id="b_created_by" alignment="0" max="32767" attributes="0"/>
+                              <Component id="b_branch" max="32767" attributes="0"/>
+                              <Component id="b_branchNo" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -1858,35 +1865,35 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel70" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="b_branchNo" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel59" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel60" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel71" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="b_branch" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel61" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel72" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="b_address" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel62" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel73" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="b_createdAt" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel63" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel74" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="b_updatedAt" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel64" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel75" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="b_created_by" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="40" max="32767" attributes="0"/>
+                          <EmptySpace pref="26" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1940,32 +1947,32 @@
                     <Property name="text" type="java.lang.String" value="Created By:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel70">
+                <Component class="javax.swing.JLabel" name="b_branchNo">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Branch No"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel71">
+                <Component class="javax.swing.JLabel" name="b_branch">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Branch"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel72">
+                <Component class="javax.swing.JLabel" name="b_address">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Address"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel73">
+                <Component class="javax.swing.JLabel" name="b_createdAt">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Created At"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel74">
+                <Component class="javax.swing.JLabel" name="b_updatedAt">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Updated At"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel75">
+                <Component class="javax.swing.JLabel" name="b_created_by">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Created By"/>
                   </Properties>
@@ -1983,7 +1990,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="44" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="saveBranchBtn" min="-2" pref="100" max="-2" attributes="0"/>
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
@@ -2327,17 +2334,17 @@
                           </Group>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel119" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel97" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel95" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel93" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel91" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel90" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel87" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel86" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel85" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel84" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel88" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_branch" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_createdBy" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_updatedAt" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_createdAt" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_contactNo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_email" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_lastname" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_firstname" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_username" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_accNo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_initial" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -2349,60 +2356,60 @@
                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel76" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel84" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_accNo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel77" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel85" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_username" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel78" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                  <Component id="jLabel86" min="-2" pref="14" max="-2" attributes="0"/>
+                                  <Component id="v_firstname" min="-2" pref="14" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel79" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel87" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_lastname" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel80" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel88" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_initial" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel82" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel90" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_email" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel83" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel91" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_contactNo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="10" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel118" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel119" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_branch" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel96" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel97" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_createdBy" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel92" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel93" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="v_createdAt" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel94" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel95" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                              <Component id="v_updatedAt" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -2466,37 +2473,37 @@
                     <Property name="text" type="java.lang.String" value="Contact No:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel84">
+                <Component class="javax.swing.JLabel" name="v_accNo">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Account No"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel85">
+                <Component class="javax.swing.JLabel" name="v_username">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Username"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel86">
+                <Component class="javax.swing.JLabel" name="v_firstname">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Firstname"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel87">
+                <Component class="javax.swing.JLabel" name="v_lastname">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Lastname"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel88">
+                <Component class="javax.swing.JLabel" name="v_initial">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Middle Initial"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel90">
+                <Component class="javax.swing.JLabel" name="v_email">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Email"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel91">
+                <Component class="javax.swing.JLabel" name="v_contactNo">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Contact No"/>
                   </Properties>
@@ -2509,7 +2516,7 @@
                     <Property name="text" type="java.lang.String" value="Created At:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel93">
+                <Component class="javax.swing.JLabel" name="v_createdAt">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Created At"/>
                   </Properties>
@@ -2522,7 +2529,7 @@
                     <Property name="text" type="java.lang.String" value="Updated At:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel95">
+                <Component class="javax.swing.JLabel" name="v_updatedAt">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Updated At"/>
                   </Properties>
@@ -2535,7 +2542,7 @@
                     <Property name="text" type="java.lang.String" value="Created By:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel97">
+                <Component class="javax.swing.JLabel" name="v_createdBy">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Created By"/>
                   </Properties>
@@ -2548,7 +2555,7 @@
                     <Property name="text" type="java.lang.String" value="Branch:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel119">
+                <Component class="javax.swing.JLabel" name="v_branch">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Branch"/>
                   </Properties>
