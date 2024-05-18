@@ -40,6 +40,7 @@ public class Dashboard extends javax.swing.JFrame {
     DefaultTableModel voucherTableModel;
     DefaultTableModel accountTableModel;
     DefaultTableModel roleTableModel;
+    DefaultTableModel branchTableModel;
 
 //    selected tables
     int requestTableID;
@@ -70,6 +71,9 @@ public class Dashboard extends javax.swing.JFrame {
 
         roleTableModel = (DefaultTableModel) roleTableList.getModel();
         roleTableList.setModel(roleTableModel);
+
+        branchTableModel = (DefaultTableModel) branchTableList.getModel();
+        branchTableList.setModel(branchTableModel);
 
         initTables();
     }
@@ -188,7 +192,7 @@ public class Dashboard extends javax.swing.JFrame {
         Branch = new javax.swing.JPanel();
         jLabel58 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        branchTableList = new javax.swing.JTable();
         jPanel10 = new javax.swing.JPanel();
         jLabel59 = new javax.swing.JLabel();
         jLabel60 = new javax.swing.JLabel();
@@ -255,7 +259,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel113 = new javax.swing.JLabel();
         jLabel115 = new javax.swing.JLabel();
         r_created = new javax.swing.JLabel();
-        r_date = new javax.swing.JLabel();
+        jLabel117 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
         roleTableList = new javax.swing.JTable();
         jPanel14 = new javax.swing.JPanel();
@@ -1375,7 +1379,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel58.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel58.setText("Branch");
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        branchTableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1391,7 +1395,7 @@ public class Dashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable4);
+        jScrollPane3.setViewportView(branchTableList);
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1567,7 +1571,7 @@ public class Dashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
 
@@ -1905,7 +1909,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         r_created.setText("Created By");
 
-        r_date.setText("Created At");
+        jLabel117.setText("Created At");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -1929,7 +1933,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel113)
                         .addGap(22, 22, 22)
-                        .addComponent(r_date)))
+                        .addComponent(jLabel117)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
@@ -1950,7 +1954,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel113)
-                    .addComponent(r_date))
+                    .addComponent(jLabel117))
                 .addGap(17, 17, 17))
         );
 
@@ -2809,6 +2813,22 @@ public class Dashboard extends javax.swing.JFrame {
 
         if (branch.isEmpty() || address.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            cstmt = connection.prepareCall("INSERT INTO branch(Branch, Address, DateCreated, DateUpdated, AccNo) VALUES (?, ?, ?, ?, ?)");
+            cstmt.setString(1, branch);
+            cstmt.setString(2, address);
+            cstmt.setTimestamp(3, DateMaker.getTime());
+            cstmt.setTimestamp(4, DateMaker.getTime());
+            cstmt.setInt(5, AccountNo);
+            cstmt.execute();
+
+            JOptionPane.showMessageDialog(this, "Branch Added Success", "Branch Added", JOptionPane.INFORMATION_MESSAGE);
+            initTables();
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_saveBranchBtnActionPerformed
 
@@ -2837,7 +2857,7 @@ public class Dashboard extends javax.swing.JFrame {
             cstmt.setTimestamp(3, DateMaker.getTime());
             cstmt.setInt(4, this.AccountNo);
             cstmt.execute();
-            
+
             JOptionPane.showMessageDialog(this, "Role Added Success", "Role Added", JOptionPane.INFORMATION_MESSAGE);
             initTables();
             createRole.setText(null);
@@ -2849,21 +2869,21 @@ public class Dashboard extends javax.swing.JFrame {
     private void roleTableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roleTableListMouseClicked
         // TODO add your handling code here:
         int roleID = Integer.parseInt(roleTableList.getValueAt(roleTableList.getSelectedRow(), 0).toString());
-        
+
         try {
             Statement resRoleStmt = connection.createStatement();
-            
+
             ResultSet resRole = resRoleStmt.executeQuery("SELECT r.RoleNo, r.`Role`, r.DateCreated, a.username FROM `role` r JOIN accounts a ON a.AccNo = r.AccNo WHERE r.RoleNo = " + roleID);
-        
+
             if (resRole.next()) {
-               
+
                 r_roleNo.setText(resRole.getString("RoleNo"));
                 r_Role.setText(resRole.getString("Role"));
-                r_date.setText(resRole.getString("DateCreated"));
+                jLabel117.setText(resRole.getString("DateCreated"));
                 r_created.setText(resRole.getString("username"));
             } else {
-                 JOptionPane.showMessageDialog(this, "ID Not Found", "No ID", JOptionPane.ERROR_MESSAGE);
-          
+                JOptionPane.showMessageDialog(this, "ID Not Found", "No ID", JOptionPane.ERROR_MESSAGE);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
@@ -2930,6 +2950,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTable accountListTable;
     private javax.swing.JTextField branchAddress;
     private javax.swing.JTextField branchName;
+    private javax.swing.JTable branchTableList;
     private javax.swing.JButton btnClose;
     private javax.swing.JPanel card;
     private javax.swing.JPanel card1;
@@ -2974,6 +2995,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel113;
     private javax.swing.JLabel jLabel114;
     private javax.swing.JLabel jLabel115;
+    private javax.swing.JLabel jLabel117;
     private javax.swing.JLabel jLabel118;
     private javax.swing.JLabel jLabel119;
     private javax.swing.JLabel jLabel120;
@@ -3099,7 +3121,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable6;
     private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
@@ -3112,7 +3133,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JDialog listDialog;
     private javax.swing.JLabel r_Role;
     private javax.swing.JLabel r_created;
-    private javax.swing.JLabel r_date;
     private javax.swing.JLabel r_roleNo;
     private javax.swing.JTable requestTable;
     private javax.swing.JTable roleTableList;
@@ -3168,6 +3188,7 @@ public class Dashboard extends javax.swing.JFrame {
         voucherTableModel.setRowCount(0);
         accountTableModel.setRowCount(0);
         roleTableModel.setRowCount(0);
+        branchTableModel.setRowCount(0);
 
         try {
 //            Request table
@@ -3200,6 +3221,13 @@ public class Dashboard extends javax.swing.JFrame {
             while (roleRes.next()) {
                 Object[] tmp = {roleRes.getInt("RoleNo"), roleRes.getString("Role")};
                 roleTableModel.addRow(tmp);
+            }
+
+            Statement branchStmt = connection.createStatement();
+            ResultSet branchRes = branchStmt.executeQuery("SELECT BranchNo, Branch, Address from branch");
+            while (branchRes.next()) {
+                Object[] tmp = {branchRes.getString("BranchNo"), branchRes.getString("Branch"), branchRes.getString("Address")};
+                branchTableModel.addRow(tmp);
             }
 
         } catch (SQLException e) {
