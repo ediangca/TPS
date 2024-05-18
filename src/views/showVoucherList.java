@@ -10,14 +10,11 @@ package views;
  * @author edian
  */
 public class showVoucherList extends java.awt.Dialog {
-
-    Dashboard dashboard;
-    
-    public showVoucherList(java.awt.Frame parent, boolean modal, Dashboard dashboard) {
+  
+    public showVoucherList(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
-        this.dashboard = dashboard;
     }
 
     /**
@@ -93,7 +90,7 @@ public class showVoucherList extends java.awt.Dialog {
 
             },
             new String [] {
-                "Vocuher No", "Voucher Type", "Amount", "Purpose", "MOP"
+                "Voucher No", "Voucher Type", "Amount", "Purpose", "MOP"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -159,7 +156,7 @@ public class showVoucherList extends java.awt.Dialog {
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
-        dashboard.gotoCreateLiq(2);
+      
     }//GEN-LAST:event_jButton19ActionPerformed
 
     /**

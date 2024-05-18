@@ -87,18 +87,6 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        listDialog = new javax.swing.JDialog(this);
-        jPanel15 = new javax.swing.JPanel();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel114 = new javax.swing.JLabel();
-        jButton20 = new javax.swing.JButton();
-        jButton19 = new javax.swing.JButton();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jTable6 = new javax.swing.JTable();
-        btnClose = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         sidebar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -275,7 +263,6 @@ public class Dashboard extends javax.swing.JFrame {
         jButton21 = new javax.swing.JButton();
         jButton22 = new javax.swing.JButton();
         jButton23 = new javax.swing.JButton();
-        jComboBox4 = new javax.swing.JComboBox<>();
         viewLiquidations = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
@@ -320,136 +307,6 @@ public class Dashboard extends javax.swing.JFrame {
         jButton16 = new javax.swing.JButton();
         jButton26 = new javax.swing.JButton();
         jButton25 = new javax.swing.JButton();
-
-        listDialog.setUndecorated(true);
-
-        jPanel15.setBackground(new java.awt.Color(21, 52, 72));
-        jPanel15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-
-        jPanel17.setBackground(new java.awt.Color(21, 52, 72));
-
-        jLabel114.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel114.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel114.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel114.setText("Treasury Portal System");
-
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel114, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel114, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jButton20.setBackground(new java.awt.Color(102, 204, 0));
-        jButton20.setForeground(new java.awt.Color(255, 255, 255));
-        jButton20.setText("View");
-
-        jButton19.setBackground(new java.awt.Color(0, 102, 255));
-        jButton19.setForeground(new java.awt.Color(255, 255, 255));
-        jButton19.setText("Select");
-        jButton19.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton19ActionPerformed(evt);
-            }
-        });
-
-        jTable6.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Request No", "Purpose"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane7.setViewportView(jTable6);
-
-        btnClose.setBackground(new java.awt.Color(153, 153, 153));
-        btnClose.setForeground(new java.awt.Color(255, 255, 255));
-        btnClose.setText("Close");
-        btnClose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCloseActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        jMenuBar1.setPreferredSize(new java.awt.Dimension(27, 0));
-
-        jMenu1.setText("File");
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
-        jMenuItem1.setText("Close");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
-        jMenuBar1.add(jMenu1);
-
-        listDialog.setJMenuBar(jMenuBar1);
-
-        //vocherList.getContentPane().add(jPanel15);
-
-        javax.swing.GroupLayout listDialogLayout = new javax.swing.GroupLayout(listDialog.getContentPane());
-        listDialog.getContentPane().setLayout(listDialogLayout);
-        listDialogLayout.setHorizontalGroup(
-            listDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        listDialogLayout.setVerticalGroup(
-            listDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        listDialog.setSize(420, 535);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -2118,8 +1975,6 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter" }));
-
         javax.swing.GroupLayout LiquidationLayout = new javax.swing.GroupLayout(Liquidation);
         Liquidation.setLayout(LiquidationLayout);
         LiquidationLayout.setHorizontalGroup(
@@ -2135,9 +1990,7 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addGroup(LiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(LiquidationLayout.createSequentialGroup()
-                                .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField18)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2160,10 +2013,9 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField18)
-                    .addComponent(jComboBox4))
+                    .addComponent(jTextField18))
                 .addGap(29, 29, 29)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2617,31 +2469,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No Request Selected", "Request Not Found", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        try {
-            statement = connection.createStatement();
-            ResultSet r = statement.executeQuery("SELECT ReqNo, username, `usage`, project, purpose, mop, amount, `status`, request.DateUpdated, request.DateCreated FROM request JOIN accounts ON request.AccNo = accounts.AccNo WHERE request.ReqNo = " + requestTableID);
-
-            if (r.next()) {
-                viewReqNo.setText(String.valueOf(r.getInt("ReqNo")));
-                viewPurpose.setText(r.getString("purpose"));
-                viewReqBy.setText(r.getString("username"));
-                viewUsage.setText(r.getString("usage"));
-                viewAmount.setText(String.valueOf(r.getDouble("amount")));
-                viewMOP.setText(r.getString("mop"));
-                viewStatus.setText(r.getString("status"));
-                viewProject.setText(r.getString("project"));
-                viewCAT.setText(String.valueOf(r.getTimestamp("DateCreated")));
-                viewUAT.setText(String.valueOf(r.getTimestamp("DateUpdated")));
-                contentCards.show(content, "viewReq");
-
-            } else {
-                JOptionPane.showMessageDialog(this, "No Request Selected", "Request Not Found", JOptionPane.ERROR_MESSAGE);
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      viewRequestPage(requestTableID);
 
 
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -2712,20 +2540,16 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        // TODO add your handling code here:
-        listDialog.setVisible(true);
-        listDialog.setLocationRelativeTo(this);
+        // TODO add your handling code here:    
+       listDialog lDialog = new listDialog(this, true, this.connection, requestTableID, AccountNo);
+       lDialog.setLocationRelativeTo(null);
+       lDialog.setVisible(true);
+       
+        if (lDialog.isViewing && lDialog.selectedID > 0) {
+            viewRequestPage(lDialog.selectedID);
+        }
+        initTables();
     }//GEN-LAST:event_jButton18ActionPerformed
-
-    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        // TODO add your handling code here:
-        listDialog.dispose();
-    }//GEN-LAST:event_btnCloseActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        btnCloseActionPerformed(evt);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
@@ -2738,7 +2562,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
         // TODO add your handling code here:
-        voucherList = new showVoucherList(this, true, this);
+        voucherList = new showVoucherList(this, true);
         voucherList.setLocationRelativeTo(this);
         voucherList.setVisible(true);
     }//GEN-LAST:event_jButton23ActionPerformed
@@ -2782,13 +2606,6 @@ public class Dashboard extends javax.swing.JFrame {
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton28ActionPerformed
-
-    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        // TODO add your handling code here:
-//        createVoucher createvoucher = new createVoucher(this, true);
-//        createvoucher.setLocationRelativeTo(this);
-//        createvoucher.setVisible(true);
-    }//GEN-LAST:event_jButton19ActionPerformed
 
     private void requestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_requestTableMouseClicked
         requestTableID = Integer.parseInt(requestTable.getValueAt(requestTable.getSelectedRow(), 0).toString());        // TODO add your handling code here:
@@ -3010,7 +2827,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField branchAddress;
     private javax.swing.JTextField branchName;
     private javax.swing.JTable branchTableList;
-    private javax.swing.JButton btnClose;
     private javax.swing.JPanel card;
     private javax.swing.JPanel card1;
     private javax.swing.JPanel card2;
@@ -3026,9 +2842,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
@@ -3045,14 +2859,12 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel107;
     private javax.swing.JLabel jLabel108;
     private javax.swing.JLabel jLabel109;
     private javax.swing.JLabel jLabel112;
     private javax.swing.JLabel jLabel113;
-    private javax.swing.JLabel jLabel114;
     private javax.swing.JLabel jLabel115;
     private javax.swing.JLabel jLabel117;
     private javax.swing.JLabel jLabel118;
@@ -3134,18 +2946,13 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel92;
     private javax.swing.JLabel jLabel94;
     private javax.swing.JLabel jLabel96;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
@@ -3159,11 +2966,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable6;
     private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
     private javax.swing.JTable jTable9;
@@ -3172,7 +2977,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
-    private javax.swing.JDialog listDialog;
     private javax.swing.JLabel r_Role;
     private javax.swing.JLabel r_created;
     private javax.swing.JLabel r_roleNo;
@@ -3304,5 +3108,33 @@ public class Dashboard extends javax.swing.JFrame {
         }
 
         return "";
+    }
+
+    private void viewRequestPage(int requestTableID) {
+          try {
+            statement = connection.createStatement();
+            ResultSet r = statement.executeQuery("SELECT ReqNo, username, `usage`, project, purpose, mop, amount, `status`, request.DateUpdated, request.DateCreated FROM request JOIN accounts ON request.AccNo = accounts.AccNo WHERE request.ReqNo = " + requestTableID);
+
+            if (r.next()) {
+                viewReqNo.setText(String.valueOf(r.getInt("ReqNo")));
+                viewPurpose.setText(r.getString("purpose"));
+                viewReqBy.setText(r.getString("username"));
+                viewUsage.setText(r.getString("usage"));
+                viewAmount.setText(String.valueOf(r.getDouble("amount")));
+                viewMOP.setText(r.getString("mop"));
+                viewStatus.setText(r.getString("status"));
+                viewProject.setText(r.getString("project"));
+                viewCAT.setText(String.valueOf(r.getTimestamp("DateCreated")));
+                viewUAT.setText(String.valueOf(r.getTimestamp("DateUpdated")));
+                contentCards.show(content, "viewReq");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No Request Selected", "Request Not Found", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
