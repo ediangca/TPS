@@ -39,6 +39,7 @@ public class Dashboard extends javax.swing.JFrame {
     DefaultTableModel requestTableModel;
     DefaultTableModel voucherTableModel;
     DefaultTableModel accountTableModel;
+    DefaultTableModel roleTableModel;
 
 //    selected tables
     int requestTableID;
@@ -66,6 +67,9 @@ public class Dashboard extends javax.swing.JFrame {
 
         accountTableModel = (DefaultTableModel) accountListTable.getModel();
         accountListTable.setModel(accountTableModel);
+
+        roleTableModel = (DefaultTableModel) roleTableList.getModel();
+        roleTableList.setModel(roleTableModel);
 
         initTables();
     }
@@ -246,14 +250,14 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         jLabel108 = new javax.swing.JLabel();
         jLabel109 = new javax.swing.JLabel();
-        jLabel110 = new javax.swing.JLabel();
-        jLabel111 = new javax.swing.JLabel();
+        r_roleNo = new javax.swing.JLabel();
+        r_Role = new javax.swing.JLabel();
         jLabel113 = new javax.swing.JLabel();
         jLabel115 = new javax.swing.JLabel();
-        jLabel116 = new javax.swing.JLabel();
-        jLabel117 = new javax.swing.JLabel();
+        r_created = new javax.swing.JLabel();
+        r_date = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        roleTableList = new javax.swing.JTable();
         jPanel14 = new javax.swing.JPanel();
         createRole = new javax.swing.JTextField();
         jLabel112 = new javax.swing.JLabel();
@@ -1889,19 +1893,19 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel109.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel109.setText("Role:");
 
-        jLabel110.setText("Role No");
+        r_roleNo.setText("Role No");
 
-        jLabel111.setText("Role");
+        r_Role.setText("Role");
 
         jLabel113.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel113.setText("Created At:");
 
         jLabel115.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel115.setText("Account No:");
+        jLabel115.setText("Created By:");
 
-        jLabel116.setText("Account No");
+        r_created.setText("Created By");
 
-        jLabel117.setText("Created At");
+        r_date.setText("Created At");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -1913,19 +1917,19 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel115)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel116))
+                        .addComponent(r_created))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel108)
                             .addComponent(jLabel109))
                         .addGap(42, 42, 42)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel111)
-                            .addComponent(jLabel110)))
+                            .addComponent(r_Role)
+                            .addComponent(r_roleNo)))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel113)
                         .addGap(22, 22, 22)
-                        .addComponent(jLabel117)))
+                        .addComponent(r_date)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
@@ -1934,23 +1938,23 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel108)
-                    .addComponent(jLabel110))
+                    .addComponent(r_roleNo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel109)
-                    .addComponent(jLabel111))
+                    .addComponent(r_Role))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel115)
-                    .addComponent(jLabel116))
+                    .addComponent(r_created))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel113)
-                    .addComponent(jLabel117))
+                    .addComponent(r_date))
                 .addGap(17, 17, 17))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        roleTableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1966,7 +1970,12 @@ public class Dashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane8.setViewportView(jTable1);
+        roleTableList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                roleTableListMouseClicked(evt);
+            }
+        });
+        jScrollPane8.setViewportView(roleTableList);
 
         jPanel14.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -2020,7 +2029,7 @@ public class Dashboard extends javax.swing.JFrame {
                             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
                     .addGroup(RolesLayout.createSequentialGroup()
                         .addComponent(jLabel107)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -2033,7 +2042,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel107, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(RolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
                     .addGroup(RolesLayout.createSequentialGroup()
                         .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -2631,9 +2640,9 @@ public class Dashboard extends javax.swing.JFrame {
             accountTableModel.setRowCount(0);
             String query = "'%" + searchAcc.getText() + "%'";
             statement = connection.createStatement();
-            
+
 //            System.out.println("SELECT a.AccNo, a.username, r.`Role`, b.`Branch`, a.address, a.address FROM accounts a JOIN branch b ON b.BranchNo = a.BranchNo JOIN `role` r ON r.RoleNo = a.RoleNo WHERE a.username LIKE " +query+ " OR a.email LIKE " +query+ " OR a.address LIKE " +query+ ";");
-            ResultSet accRes = statement.executeQuery("SELECT a.AccNo, a.username, r.`Role`, b.`Branch`, a.address, a.email FROM accounts a JOIN branch b ON b.BranchNo = a.BranchNo JOIN `role` r ON r.RoleNo = a.RoleNo WHERE a.username LIKE " +query+ " OR a.email LIKE " +query+ " OR a.address LIKE " +query+ ";");
+            ResultSet accRes = statement.executeQuery("SELECT a.AccNo, a.username, r.`Role`, b.`Branch`, a.address, a.email FROM accounts a JOIN branch b ON b.BranchNo = a.BranchNo JOIN `role` r ON r.RoleNo = a.RoleNo WHERE a.username LIKE " + query + " OR a.email LIKE " + query + " OR a.address LIKE " + query + ";");
 
             while (accRes.next()) {
                 Object[] tmp = {accRes.getInt("AccNo"), accRes.getString("username"), accRes.getString("Role"), accRes.getString("branch"), accRes.getString("address"), accRes.getString("email")};
@@ -2828,12 +2837,38 @@ public class Dashboard extends javax.swing.JFrame {
             cstmt.setTimestamp(3, DateMaker.getTime());
             cstmt.setInt(4, this.AccountNo);
             cstmt.execute();
-
+            
             JOptionPane.showMessageDialog(this, "Role Added Success", "Role Added", JOptionPane.INFORMATION_MESSAGE);
+            initTables();
+            createRole.setText(null);
         } catch (SQLException e) {
         }
 
     }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void roleTableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roleTableListMouseClicked
+        // TODO add your handling code here:
+        int roleID = Integer.parseInt(roleTableList.getValueAt(roleTableList.getSelectedRow(), 0).toString());
+        
+        try {
+            Statement resRoleStmt = connection.createStatement();
+            
+            ResultSet resRole = resRoleStmt.executeQuery("SELECT r.RoleNo, r.`Role`, r.DateCreated, a.username FROM `role` r JOIN accounts a ON a.AccNo = r.AccNo WHERE r.RoleNo = " + roleID);
+        
+            if (resRole.next()) {
+               
+                r_roleNo.setText(resRole.getString("RoleNo"));
+                r_Role.setText(resRole.getString("Role"));
+                r_date.setText(resRole.getString("DateCreated"));
+                r_created.setText(resRole.getString("username"));
+            } else {
+                 JOptionPane.showMessageDialog(this, "ID Not Found", "No ID", JOptionPane.ERROR_MESSAGE);
+          
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_roleTableListMouseClicked
 
     /**
      * @param args the command line arguments
@@ -2935,14 +2970,10 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel107;
     private javax.swing.JLabel jLabel108;
     private javax.swing.JLabel jLabel109;
-    private javax.swing.JLabel jLabel110;
-    private javax.swing.JLabel jLabel111;
     private javax.swing.JLabel jLabel112;
     private javax.swing.JLabel jLabel113;
     private javax.swing.JLabel jLabel114;
     private javax.swing.JLabel jLabel115;
-    private javax.swing.JLabel jLabel116;
-    private javax.swing.JLabel jLabel117;
     private javax.swing.JLabel jLabel118;
     private javax.swing.JLabel jLabel119;
     private javax.swing.JLabel jLabel120;
@@ -3068,7 +3099,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable6;
     private javax.swing.JTable jTable7;
@@ -3080,7 +3110,12 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
     private javax.swing.JDialog listDialog;
+    private javax.swing.JLabel r_Role;
+    private javax.swing.JLabel r_created;
+    private javax.swing.JLabel r_date;
+    private javax.swing.JLabel r_roleNo;
     private javax.swing.JTable requestTable;
+    private javax.swing.JTable roleTableList;
     private javax.swing.JButton saveBranchBtn;
     private javax.swing.JTextField searchAcc;
     private javax.swing.JTextField searchReqText;
@@ -3132,6 +3167,7 @@ public class Dashboard extends javax.swing.JFrame {
         requestTableModel.setRowCount(0);
         voucherTableModel.setRowCount(0);
         accountTableModel.setRowCount(0);
+        roleTableModel.setRowCount(0);
 
         try {
 //            Request table
@@ -3149,7 +3185,6 @@ public class Dashboard extends javax.swing.JFrame {
             while (res.next()) {
                 Object[] tmp = {res.getInt("VoucherNo"), res.getString("VoucherType"), res.getDouble("amount")};
                 voucherTableModel.addRow(tmp);
-                voucherTableModel.fireTableDataChanged();
             }
 
 //            account table
@@ -3157,10 +3192,16 @@ public class Dashboard extends javax.swing.JFrame {
             ResultSet accRes = accStmt.executeQuery("SELECT a.AccNo, a.username, r.`Role`, b.`Branch`, a.address, a.email FROM accounts a JOIN branch b ON b.BranchNo = a.BranchNo JOIN `role` r ON r.RoleNo = a.RoleNo;");
             while (accRes.next()) {
                 Object[] tmp = {accRes.getInt("AccNo"), accRes.getString("username"), accRes.getString("Role"), accRes.getString("branch"), accRes.getString("address"), accRes.getString("email")};
-
                 accountTableModel.addRow(tmp);
-        
             }
+
+            Statement roleStmt = connection.createStatement();
+            ResultSet roleRes = roleStmt.executeQuery("SELECT RoleNo, `Role` FROM `role`");
+            while (roleRes.next()) {
+                Object[] tmp = {roleRes.getInt("RoleNo"), roleRes.getString("Role")};
+                roleTableModel.addRow(tmp);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

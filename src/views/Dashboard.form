@@ -2593,7 +2593,7 @@
                                   <Component id="jPanel14" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jScrollPane8" pref="443" max="32767" attributes="0"/>
+                              <Component id="jScrollPane8" pref="449" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jLabel107" min="-2" max="-2" attributes="0"/>
@@ -2611,7 +2611,7 @@
                       <Component id="jLabel107" min="-2" pref="39" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane8" pref="522" max="32767" attributes="0"/>
+                          <Component id="jScrollPane8" pref="552" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -2649,7 +2649,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel115" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jLabel116" min="-2" max="-2" attributes="0"/>
+                                  <Component id="r_created" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -2658,14 +2658,14 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel111" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel110" min="-2" max="-2" attributes="0"/>
+                                      <Component id="r_Role" min="-2" max="-2" attributes="0"/>
+                                      <Component id="r_roleNo" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel113" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                                  <Component id="jLabel117" min="-2" max="-2" attributes="0"/>
+                                  <Component id="r_date" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -2678,22 +2678,22 @@
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel108" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel110" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="r_roleNo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel109" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel111" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="r_Role" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel115" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel116" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="r_created" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel113" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel117" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="r_date" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       </Group>
@@ -2717,12 +2717,12 @@
                     <Property name="text" type="java.lang.String" value="Role:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel110">
+                <Component class="javax.swing.JLabel" name="r_roleNo">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Role No"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel111">
+                <Component class="javax.swing.JLabel" name="r_Role">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Role"/>
                   </Properties>
@@ -2740,15 +2740,15 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Account No:"/>
+                    <Property name="text" type="java.lang.String" value="Created By:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel116">
+                <Component class="javax.swing.JLabel" name="r_created">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Account No"/>
+                    <Property name="text" type="java.lang.String" value="Created By"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel117">
+                <Component class="javax.swing.JLabel" name="r_date">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Created At"/>
                   </Properties>
@@ -2759,7 +2759,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
+                <Component class="javax.swing.JTable" name="roleTableList">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="2" rowCount="0">
@@ -2768,6 +2768,9 @@
                       </Table>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="roleTableListMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
