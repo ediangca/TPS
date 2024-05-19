@@ -24,16 +24,16 @@ public class createVoucher extends java.awt.Dialog {
 
     int reqNo;
     int AccNo;
-    
+
     Connection conn;
     Statement statement;
     ResultSet result;
     CallableStatement cstmt;
-    
+
     public createVoucher(java.awt.Frame parent, boolean modal, int reqNo, int AccNo, Connection conn) {
         super(parent, modal);
         initComponents();
-        
+
         this.reqNo = reqNo;
         this.AccNo = AccNo;
         this.conn = conn;
@@ -218,16 +218,16 @@ public class createVoucher extends java.awt.Dialog {
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
         Timestamp timestamp = DateMaker.getTime();
-        
+
         String type = textType.getText();
         String amount = textAMount.getText();
         String reference = refNo.getText();
-        
+
         if (type.isEmpty() || amount.isEmpty() || reference.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
 //        voucherType` varchar(45),
 //          `amount` double(10,2),
 //          `REFNo` varchar(45),
@@ -236,7 +236,6 @@ public class createVoucher extends java.awt.Dialog {
 //          `DateUpdated` datetime,
 //          `AccNo` int unsigned,
 //          `status` varchar(45))
-        
         try {
             cstmt = conn.prepareCall("CALL `tps`.`insert.Voucher`(? ,? , ?, ? ,? , ?, ?, ?)");
             cstmt.setString(1, type);
@@ -244,17 +243,19 @@ public class createVoucher extends java.awt.Dialog {
             cstmt.setString(3, reference);
             cstmt.setInt(4, this.reqNo);
             cstmt.setTimestamp(5, timestamp);
-             cstmt.setTimestamp(6, timestamp);
-             cstmt.setInt(7, this.AccNo);
-             cstmt.setString(8, "For Liquidation");
-             
+            cstmt.setTimestamp(6, timestamp);
+            cstmt.setInt(7, this.AccNo);
+            cstmt.setString(8, "For Liquidation");
+
             cstmt.execute();
-             JOptionPane.showMessageDialog(this, "Voucher Created", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            JOptionPane.showMessageDialog(this, "Voucher Created", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
+
         } catch (SQLException ex) {
             Logger.getLogger(createVoucher.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void textTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textTypeActionPerformed
@@ -264,7 +265,6 @@ public class createVoucher extends java.awt.Dialog {
     private void refNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refNoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_refNoActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

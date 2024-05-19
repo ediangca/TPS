@@ -12,11 +12,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import models.Particular;
 
 /**
  *
@@ -41,11 +43,15 @@ public class Dashboard extends javax.swing.JFrame {
     DefaultTableModel accountTableModel;
     DefaultTableModel roleTableModel;
     DefaultTableModel branchTableModel;
-
+    DefaultTableModel c_TableModel;
 //    selected tables
     int requestTableID;
     int voucherTableID;
     int accountTableID;
+    int c_partiTableID;
+
+//    arraylist
+    ArrayList<Particular> particularsList = new ArrayList<>();
 
     public Dashboard() {
         initComponents();
@@ -74,6 +80,9 @@ public class Dashboard extends javax.swing.JFrame {
 
         branchTableModel = (DefaultTableModel) branchTableList.getModel();
         branchTableList.setModel(branchTableModel);
+
+        c_TableModel = (DefaultTableModel) c_partiTable.getModel();
+        c_partiTable.setModel(c_TableModel);
 
         initTables();
     }
@@ -124,7 +133,7 @@ public class Dashboard extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        filterReq = new javax.swing.JComboBox<>();
         jButton8 = new javax.swing.JButton();
         viewRequest = new javax.swing.JPanel();
         jLabel121 = new javax.swing.JLabel();
@@ -149,7 +158,7 @@ public class Dashboard extends javax.swing.JFrame {
         viewCAT = new javax.swing.JLabel();
         jLabel140 = new javax.swing.JLabel();
         viewUAT = new javax.swing.JLabel();
-        jButton24 = new javax.swing.JButton();
+        approvedReqBtn = new javax.swing.JButton();
         Voucher = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -158,7 +167,6 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
@@ -168,7 +176,6 @@ public class Dashboard extends javax.swing.JFrame {
         VNo = new javax.swing.JLabel();
         VType = new javax.swing.JLabel();
         VAmount = new javax.swing.JLabel();
-        VPurpose = new javax.swing.JLabel();
         VRNo = new javax.swing.JLabel();
         VReqNo = new javax.swing.JLabel();
         VANo = new javax.swing.JLabel();
@@ -292,7 +299,7 @@ public class Dashboard extends javax.swing.JFrame {
         createLiquidation = new javax.swing.JPanel();
         jLabel142 = new javax.swing.JLabel();
         jScrollPane10 = new javax.swing.JScrollPane();
-        jTable9 = new javax.swing.JTable();
+        c_partiTable = new javax.swing.JTable();
         jPanel19 = new javax.swing.JPanel();
         jTextField19 = new javax.swing.JTextField();
         jTextField20 = new javax.swing.JTextField();
@@ -303,7 +310,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel145 = new javax.swing.JLabel();
         jLabel146 = new javax.swing.JLabel();
         jLabel147 = new javax.swing.JLabel();
-        jLabel148 = new javax.swing.JLabel();
+        c_total = new javax.swing.JLabel();
         jButton16 = new javax.swing.JButton();
         jButton26 = new javax.swing.JButton();
         jButton25 = new javax.swing.JButton();
@@ -732,7 +739,7 @@ public class Dashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Req No", "Usage", "Proje ct", "Purpose", "MOP", "Amount", "Created At"
+                "Req No", "Usage", "Proje ct", "Purpose", "MOP", "Amount", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -788,7 +795,12 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter" }));
+        filterReq.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter", "For Approval", "Approved" }));
+        filterReq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterReqActionPerformed(evt);
+            }
+        });
 
         jButton8.setForeground(new java.awt.Color(0, 102, 204));
         jButton8.setText("Refresh");
@@ -807,7 +819,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(RequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(RequestLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(494, 494, 494)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, RequestLayout.createSequentialGroup()
@@ -817,7 +829,7 @@ public class Dashboard extends javax.swing.JFrame {
                                 .addComponent(jButton8)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(RequestLayout.createSequentialGroup()
-                                .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(filterReq, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchReqText, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -843,7 +855,7 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(searchReqText)
-                    .addComponent(jComboBox3))
+                    .addComponent(filterReq))
                 .addGap(2, 2, 2)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -984,13 +996,13 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
-        jButton24.setBackground(new java.awt.Color(78, 115, 223));
-        jButton24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton24.setForeground(new java.awt.Color(255, 255, 255));
-        jButton24.setText("Approve");
-        jButton24.addActionListener(new java.awt.event.ActionListener() {
+        approvedReqBtn.setBackground(new java.awt.Color(78, 115, 223));
+        approvedReqBtn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        approvedReqBtn.setForeground(new java.awt.Color(255, 255, 255));
+        approvedReqBtn.setText("Approve");
+        approvedReqBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton24ActionPerformed(evt);
+                approvedReqBtnActionPerformed(evt);
             }
         });
 
@@ -1007,7 +1019,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(viewRequestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(viewRequestLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(approvedReqBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
@@ -1019,7 +1031,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(approvedReqBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(157, 157, 157))
         );
 
@@ -1028,16 +1040,22 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel35.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel35.setText("Voucher");
 
+        jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane2MouseClicked(evt);
+            }
+        });
+
         voucherTableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Vocuher No", "Voucher Type", "Amount"
+                "Vocuher No", "Voucher Type", "Amount", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1061,9 +1079,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel38.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel38.setText("Amount:");
-
-        jLabel39.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel39.setText("Purpose:");
 
         jLabel41.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel41.setText("Reference No:");
@@ -1093,14 +1108,12 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel36)
                     .addComponent(jLabel37)
                     .addComponent(jLabel38)
-                    .addComponent(jLabel39)
                     .addComponent(jLabel41))
                 .addGap(65, 65, 65)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(VNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(VAmount, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                     .addComponent(VType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(VPurpose, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                     .addComponent(VRNo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1160,17 +1173,14 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel45)
-                    .addComponent(VPurpose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel39)
-                    .addComponent(VCAT))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(VCAT)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel41)
-                        .addComponent(VRNo))
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel46)
-                        .addComponent(VUAT, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(VRNo)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel46)
+                    .addComponent(VUAT, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51))
         );
 
@@ -2215,23 +2225,28 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel142.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel142.setText("Create Liquidation");
 
-        jTable9.setModel(new javax.swing.table.DefaultTableModel(
+        c_partiTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Item", "Unit", "Quantity"
+                "ID", "Item", "Unit", "Quantity"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane10.setViewportView(jTable9);
+        c_partiTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                c_partiTableMouseClicked(evt);
+            }
+        });
+        jScrollPane10.setViewportView(c_partiTable);
 
         jPanel19.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -2262,8 +2277,8 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel147.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel147.setText("Total:");
 
-        jLabel148.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel148.setText("Total");
+        c_total.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        c_total.setText("Total");
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
@@ -2275,7 +2290,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(jPanel19Layout.createSequentialGroup()
                         .addComponent(jLabel147)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel148))
+                        .addComponent(c_total))
                     .addComponent(jLabel146)
                     .addComponent(jLabel145)
                     .addComponent(jLabel144)
@@ -2309,13 +2324,18 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel147)
-                    .addComponent(jLabel148))
+                    .addComponent(c_total))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jButton16.setBackground(new java.awt.Color(153, 0, 51));
         jButton16.setForeground(new java.awt.Color(255, 255, 255));
         jButton16.setText("Delete");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
 
         jButton26.setBackground(new java.awt.Color(0, 102, 204));
         jButton26.setForeground(new java.awt.Color(255, 255, 255));
@@ -2335,26 +2355,27 @@ public class Dashboard extends javax.swing.JFrame {
         createLiquidation.setLayout(createLiquidationLayout);
         createLiquidationLayout.setHorizontalGroup(
             createLiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
+            .addGroup(createLiquidationLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jLabel142, javax.swing.GroupLayout.PREFERRED_SIZE, 202, Short.MAX_VALUE)
-                .addGap(609, 609, 609))
+                .addComponent(jLabel142, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(createLiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(createLiquidationLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(createLiquidationLayout.createSequentialGroup()
-                        .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(createLiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(createLiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(createLiquidationLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(createLiquidationLayout.createSequentialGroup()
+                                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         createLiquidationLayout.setVerticalGroup(
@@ -2372,7 +2393,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         content.add(createLiquidation, "createLiq");
@@ -2469,7 +2490,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No Request Selected", "Request Not Found", JOptionPane.ERROR_MESSAGE);
             return;
         }
-      viewRequestPage(requestTableID);
+        viewRequestPage(requestTableID);
 
 
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -2502,7 +2523,7 @@ public class Dashboard extends javax.swing.JFrame {
         }
         try {
             Statement vStmt = connection.createStatement();
-            ResultSet res = vStmt   .executeQuery("SELECT a.AccNo, a.username, a.firstname, a.mi, a.lastname, a.email, a.contactNo, b.Branch, a.DateCreated, a.DateUpdated, c.username AS creator FROM accounts a JOIN branch b ON a.BranchNo = b.BranchNo JOIN accounts c ON c.AccNo = a.CreatedBy WHERE a.AccNo = " + accountTableID);
+            ResultSet res = vStmt.executeQuery("SELECT a.AccNo, a.username, a.firstname, a.mi, a.lastname, a.email, a.contactNo, b.Branch, a.DateCreated, a.DateUpdated, c.username AS creator FROM accounts a JOIN branch b ON a.BranchNo = b.BranchNo JOIN accounts c ON c.AccNo = a.CreatedBy WHERE a.AccNo = " + accountTableID);
 
             if (res.next()) {
                 v_accNo.setText(res.getString("AccNo"));
@@ -2541,10 +2562,10 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         // TODO add your handling code here:    
-       listDialog lDialog = new listDialog(this, true, this.connection, requestTableID, AccountNo);
-       lDialog.setLocationRelativeTo(null);
-       lDialog.setVisible(true);
-       
+        listDialog lDialog = new listDialog(this, true, this.connection, requestTableID, AccountNo);
+        lDialog.setLocationRelativeTo(null);
+        lDialog.setVisible(true);
+
         if (lDialog.isViewing && lDialog.selectedID > 0) {
             viewRequestPage(lDialog.selectedID);
         }
@@ -2567,23 +2588,31 @@ public class Dashboard extends javax.swing.JFrame {
         voucherList.setVisible(true);
     }//GEN-LAST:event_jButton23ActionPerformed
 
-    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+    private void approvedReqBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approvedReqBtnActionPerformed
         // TODO add your handling code here:
         createVoucher createvoucher = new createVoucher(this, true, this.requestTableID, this.AccountNo, this.connection);
         createvoucher.setLocationRelativeTo(this);
         createvoucher.setVisible(true);
 
-    }//GEN-LAST:event_jButton24ActionPerformed
+    }//GEN-LAST:event_approvedReqBtnActionPerformed
 
     private void jTextField20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField20ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField20ActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        // TODO add your handling code here:
-        Particulars particular = new Particulars(this, true);
+       
+
+        Particulars particular = new Particulars(this, true, this.AccountNo);
         particular.setLocationRelativeTo(this);
         particular.setVisible(true);
+
+        System.out.println(particular.particularData);
+        if (particular.particularData != null) {
+            this.particularsList.add(particular.particularData);
+        }
+
+       initC_table();
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jTextField22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField22ActionPerformed
@@ -2604,7 +2633,11 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
-        // TODO add your handling code here:
+        if (voucherTableID <=0) {
+            JOptionPane.showMessageDialog(this, "Please select an item", "Select Item", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+         contentCards.show(content, "createLiq");
     }//GEN-LAST:event_jButton28ActionPerformed
 
     private void requestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_requestTableMouseClicked
@@ -2614,6 +2647,14 @@ public class Dashboard extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
+            statement = connection.createStatement();
+            ResultSet check = statement.executeQuery("SELECT * FROM request WHERE request.ReqNo = " + requestTableID);
+
+            if (check.next() && !check.getString("status").equals("For Approval")) {
+                JOptionPane.showMessageDialog(this, "Request is already approved", "Error editing request", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             statement = connection.createStatement();
             ResultSet r = statement.executeQuery("SELECT * FROM request WHERE request.ReqNo = " + requestTableID);
 
@@ -2644,7 +2685,6 @@ public class Dashboard extends javax.swing.JFrame {
                 VNo.setText(res.getString("VoucherNo"));
                 VType.setText(res.getString("VoucherType"));
                 VAmount.setText(res.getString("voucher.amount"));
-                VPurpose.setText(res.getString("purpose"));
                 VRNo.setText(res.getString("REFNo"));
                 VReqNo.setText(res.getString("ReqNo"));
                 VANo.setText(res.getString("AccNo"));
@@ -2760,6 +2800,59 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_branchTableListMouseClicked
 
+    private void filterReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterReqActionPerformed
+        try {
+            String filters = filterReq.getSelectedItem().toString();
+            Statement stmt = connection.createStatement();
+            String q = "SELECT * FROM request WHERE `status` = ";
+
+            if (filters.equals("For Approval")) {
+                requestTableModel.setRowCount(0);
+                ResultSet reqRes = stmt.executeQuery(q + " 'For Approval'");
+                while (reqRes.next()) {
+                    Object[] tmp = {reqRes.getString("ReqNo"), reqRes.getString("usage"), reqRes.getString("project"), reqRes.getString("purpose"), reqRes.getString("mop"), reqRes.getDouble("amount"), reqRes.getTimestamp("DateCreated")};
+                    requestTableModel.addRow(tmp);
+                    requestTableModel.fireTableDataChanged();
+                }
+            } else if (filters.equals("Approved")) {
+                requestTableModel.setRowCount(0);
+                ResultSet reqRes = stmt.executeQuery(q + " 'Approved'");
+                while (reqRes.next()) {
+                    Object[] tmp = {reqRes.getString("ReqNo"), reqRes.getString("usage"), reqRes.getString("project"), reqRes.getString("purpose"), reqRes.getString("mop"), reqRes.getDouble("amount"), reqRes.getTimestamp("DateCreated")};
+                    requestTableModel.addRow(tmp);
+                    requestTableModel.fireTableDataChanged();
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_filterReqActionPerformed
+
+    private void c_partiTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_c_partiTableMouseClicked
+        // TODO add your handling code here:
+        c_partiTableID = Integer.parseInt(c_partiTable.getValueAt(c_partiTable.getSelectedRow(), 0).toString());
+    }//GEN-LAST:event_c_partiTableMouseClicked
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+
+        for (Particular p : particularsList) {
+            if (p.pNo == this.c_partiTableID) {
+                this.particularsList.remove(p);
+                initC_table();
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(this, "ID Not Found", "No ID", JOptionPane.ERROR_MESSAGE);
+
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2810,7 +2903,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel VAmount;
     private javax.swing.JLabel VCAT;
     private javax.swing.JLabel VNo;
-    private javax.swing.JLabel VPurpose;
     private javax.swing.JLabel VRNo;
     private javax.swing.JLabel VReqNo;
     private javax.swing.JLabel VStatus;
@@ -2818,6 +2910,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel VUAT;
     private javax.swing.JPanel Voucher;
     private javax.swing.JTable accountListTable;
+    private javax.swing.JButton approvedReqBtn;
     private javax.swing.JLabel b_address;
     private javax.swing.JLabel b_branch;
     private javax.swing.JLabel b_branchNo;
@@ -2827,12 +2920,15 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField branchAddress;
     private javax.swing.JTextField branchName;
     private javax.swing.JTable branchTableList;
+    private javax.swing.JTable c_partiTable;
+    private javax.swing.JLabel c_total;
     private javax.swing.JPanel card;
     private javax.swing.JPanel card1;
     private javax.swing.JPanel card2;
     private javax.swing.JPanel content;
     private javax.swing.JPanel createLiquidation;
     private javax.swing.JTextField createRole;
+    private javax.swing.JComboBox<String> filterReq;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton12;
@@ -2846,7 +2942,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton27;
@@ -2858,7 +2953,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel107;
     private javax.swing.JLabel jLabel108;
@@ -2887,7 +2981,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel145;
     private javax.swing.JLabel jLabel146;
     private javax.swing.JLabel jLabel147;
-    private javax.swing.JLabel jLabel148;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -2914,7 +3007,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
@@ -2971,7 +3063,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
-    private javax.swing.JTable jTable9;
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField19;
     private javax.swing.JTextField jTextField20;
@@ -3052,7 +3143,7 @@ public class Dashboard extends javax.swing.JFrame {
             Statement reqStmt = connection.createStatement();
             ResultSet reqRes = reqStmt.executeQuery("select * from request");
             while (reqRes.next()) {
-                Object[] tmp = {reqRes.getString("ReqNo"), reqRes.getString("usage"), reqRes.getString("project"), reqRes.getString("purpose"), reqRes.getString("mop"), reqRes.getDouble("amount"), reqRes.getTimestamp("DateCreated")};
+                Object[] tmp = {reqRes.getString("ReqNo"), reqRes.getString("usage"), reqRes.getString("project"), reqRes.getString("purpose"), reqRes.getString("mop"), reqRes.getDouble("amount"), reqRes.getString("status")};
                 requestTableModel.addRow(tmp);
                 requestTableModel.fireTableDataChanged();
             }
@@ -3061,7 +3152,7 @@ public class Dashboard extends javax.swing.JFrame {
             Statement vouchStmt = connection.createStatement();
             ResultSet res = vouchStmt.executeQuery("SELECT * FROM voucher");
             while (res.next()) {
-                Object[] tmp = {res.getInt("VoucherNo"), res.getString("VoucherType"), res.getDouble("amount")};
+                Object[] tmp = {res.getInt("VoucherNo"), res.getString("VoucherType"), res.getDouble("amount"), res.getString("status")};
                 voucherTableModel.addRow(tmp);
             }
 
@@ -3111,11 +3202,16 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     private void viewRequestPage(int requestTableID) {
-          try {
+        try {
+            approvedReqBtn.setVisible(true);
             statement = connection.createStatement();
             ResultSet r = statement.executeQuery("SELECT ReqNo, username, `usage`, project, purpose, mop, amount, `status`, request.DateUpdated, request.DateCreated FROM request JOIN accounts ON request.AccNo = accounts.AccNo WHERE request.ReqNo = " + requestTableID);
 
             if (r.next()) {
+                if (r.getString("status").equals("Approved")) {
+                    approvedReqBtn.setVisible(false);
+                }
+
                 viewReqNo.setText(String.valueOf(r.getInt("ReqNo")));
                 viewPurpose.setText(r.getString("purpose"));
                 viewReqBy.setText(r.getString("username"));
@@ -3136,5 +3232,17 @@ public class Dashboard extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void initC_table() {
+         c_TableModel.setRowCount(0);
+         int tmpTotal = 0;
+         
+         for (Particular p : particularsList) {
+             tmpTotal += p.total;
+            Object[] tmp = {p.pNo, p.item, p.unit, p.qty};
+            c_TableModel.addRow(tmp);
+        }
+        c_total.setText(String.valueOf(tmpTotal));
     }
 }

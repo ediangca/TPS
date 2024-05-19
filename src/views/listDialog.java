@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -186,11 +189,23 @@ public class listDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        // TODO add your handling code here:
-                createVoucher createvoucher = new createVoucher(null, true, this.requestTableID, this.AccountNo, this.connection);
-                createvoucher.setLocationRelativeTo(this);
-                createvoucher.setVisible(true);
-                this.dispose();
+        try {
+            // TODO add your handling code here:
+            Statement stmt = connection.createStatement();
+            ResultSet res = stmt.executeQuery("SELECT status FROM request WHERE ReqNo = " + this.requestTableID);
+            
+            if (res.next() && !res.getString("status").equalsIgnoreCase("For Approval")) {
+                JOptionPane.showMessageDialog(this, "Request Already Liquidated", "Already Liquidated", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            createVoucher createvoucher = new createVoucher(null, true, this.requestTableID, this.AccountNo, this.connection);
+            createvoucher.setLocationRelativeTo(this);
+            createvoucher.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(listDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed

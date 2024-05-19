@@ -5,7 +5,11 @@
  */
 package views;
 
+import classes.DateMaker;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import models.Particular;
 
 /**
  *
@@ -13,12 +17,13 @@ import javax.swing.JOptionPane;
  */
 public class Particulars extends java.awt.Dialog {
 
-    /**
-     * Creates new form showVoucherList
-     */
-    public Particulars(java.awt.Frame parent, boolean modal) {
+    public Particular particularData;
+    int accNo;
+
+    public Particulars(java.awt.Frame parent, boolean modal, int accNo) {
         super(parent, modal);
         initComponents();
+        this.accNo = accNo;
     }
 
     /**
@@ -105,6 +110,12 @@ public class Particulars extends java.awt.Dialog {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Unit");
+
+        textQuantity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textQuantityActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Quantity");
@@ -218,17 +229,37 @@ public class Particulars extends java.awt.Dialog {
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
         String item = textItem.getText();
-        int unit = comboUnit.getSelectedIndex();
+        String unit = comboUnit.getSelectedItem().toString();
         String quantity = textQuantity.getText();
         String cost = textCost.getText();
-        
-        if (item.isEmpty() || unit <= 0 || quantity.isEmpty() || cost.isEmpty()) {
+
+        if (item.isEmpty() || unit.isEmpty() || quantity.isEmpty() || cost.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        try {
+
+            int t_quantity = Integer.parseInt(textQuantity.getText());
+            double t_cost = Double.parseDouble(textCost.getText());
+            double totalAmount = t_quantity * t_cost;
+            total.setText(String.valueOf(totalAmount));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Enter a number for cost and quantity", "Invalid Format", JOptionPane.ERROR_MESSAGE);    
+       return;
+        }
+        System.out.println("whaaa");
+        int choice = JOptionPane.showConfirmDialog(this, "Confim Submit", "Submit", JOptionPane.CANCEL_OPTION);
+        System.out.println(choice);
+        if (choice == 0) {
+            particularData = new Particular(item, unit, Double.parseDouble(quantity), Integer.parseInt(cost), Double.parseDouble(total.getText()), DateMaker.getTime(), DateMaker.getTime(), this.accNo);
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton19ActionPerformed
 
+    private void textQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textQuantityActionPerformed
 
+//        total.setText(String.valueOf(Integer.parseInt(textQuantity.getText()) * Integer.parseInt(textCost.getText())));
+    }//GEN-LAST:event_textQuantityActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
