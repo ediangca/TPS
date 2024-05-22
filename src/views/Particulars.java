@@ -6,6 +6,12 @@
 package views;
 
 import classes.DateMaker;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -19,12 +25,42 @@ public class Particulars extends java.awt.Dialog {
 
     public Particular particularData;
     int accNo;
+    int ID;
     double totalAmount;
+    Connection conn;
 
     public Particulars(java.awt.Frame parent, boolean modal, int accNo) {
         super(parent, modal);
         initComponents();
         this.accNo = accNo;
+    }
+
+    public Particulars(java.awt.Frame parent, boolean modal, int ID, Connection conn) {
+        super(parent, modal);
+        initComponents();
+        this.ID = ID;
+        this.conn = conn;
+
+        jButton19.setVisible(false);
+
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery("select * from particulars WHERE PNo = " + this.ID);
+            
+            if (res.next()) {
+                textItem.setText(res.getString("item"));
+                textCost.setText(res.getString("cost"));
+                textQuantity.setText(res.getString("qty"));
+                comboUnit.setSelectedItem(res.getString("unit"));
+                total.setText(res.getString("total"));
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Particulars.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -75,7 +111,7 @@ public class Particulars extends java.awt.Dialog {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel114, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                .addComponent(jLabel114, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel17Layout.setVerticalGroup(
@@ -178,7 +214,7 @@ public class Particulars extends java.awt.Dialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(total))
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
@@ -191,7 +227,7 @@ public class Particulars extends java.awt.Dialog {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -253,7 +289,7 @@ public class Particulars extends java.awt.Dialog {
         System.out.println(choice);
         if (choice == 0) {
             particularData = new Particular(item, unit, Double.parseDouble(quantity), Integer.parseInt(cost), Double.parseDouble(total.getText()), DateMaker.getTime(), DateMaker.getTime(), this.accNo);
-            
+
             this.dispose();
         }
     }//GEN-LAST:event_jButton19ActionPerformed

@@ -5,16 +5,35 @@
  */
 package views;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author edian
  */
 public class showVoucherList extends java.awt.Dialog {
   
-    public showVoucherList(java.awt.Frame parent, boolean modal) {
+    Connection conn;
+    DefaultTableModel model;
+    boolean isSelect = false;
+    int id;
+    
+    
+    public showVoucherList(java.awt.Frame parent, boolean modal, Connection conn) {
         super(parent, modal);
         initComponents();
+        this.conn = conn;
         
+        
+        model = (DefaultTableModel) table.getModel();
+        table.setModel(model);
+        initTable();
     }
 
     /**
@@ -31,7 +50,7 @@ public class showVoucherList extends java.awt.Dialog {
         jButton19 = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
 
         setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -85,23 +104,28 @@ public class showVoucherList extends java.awt.Dialog {
             }
         });
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Voucher No", "Voucher Type", "Amount", "Purpose", "MOP"
+                "Voucher No", "Voucher Type", "Amount", "Purpose"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable3);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(table);
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -156,8 +180,14 @@ public class showVoucherList extends java.awt.Dialog {
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
+        isSelect = true;
       
     }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        // TODO add your handling code here:
+        id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+    }//GEN-LAST:event_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -172,6 +202,20 @@ public class showVoucherList extends java.awt.Dialog {
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
+
+    private void initTable() {
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery("SELECT * FROM voucher");
+            while (res.next()) {
+                Object[] tmp = {res.getInt("VoucherNo"), res.getString("VoucherType"), res.getDouble("amount"), res.getString("status")};
+                model.addRow(tmp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(showVoucherList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }
