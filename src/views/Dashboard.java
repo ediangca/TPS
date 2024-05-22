@@ -44,11 +44,16 @@ public class Dashboard extends javax.swing.JFrame {
     DefaultTableModel roleTableModel;
     DefaultTableModel branchTableModel;
     DefaultTableModel c_TableModel;
+    DefaultTableModel liquidationTableModel;
+    
 //    selected tables
     int requestTableID;
     int voucherTableID;
     int accountTableID;
+    int liquidationTableID;
     int c_partiTableID;
+
+    double totalAmount;
 
 //    arraylist
     ArrayList<Particular> particularsList = new ArrayList<>();
@@ -83,6 +88,9 @@ public class Dashboard extends javax.swing.JFrame {
 
         c_TableModel = (DefaultTableModel) c_partiTable.getModel();
         c_partiTable.setModel(c_TableModel);
+        
+        liquidationTableModel = (DefaultTableModel) liquidationTable.getModel();
+        liquidationTable.setModel(liquidationTableModel);
 
         initTables();
     }
@@ -264,10 +272,9 @@ public class Dashboard extends javax.swing.JFrame {
         Liquidation = new javax.swing.JPanel();
         jLabel120 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable7 = new javax.swing.JTable();
+        liquidationTable = new javax.swing.JTable();
         jTextField18 = new javax.swing.JTextField();
         jButton17 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
         jButton22 = new javax.swing.JButton();
         jButton23 = new javax.swing.JButton();
         viewLiquidations = new javax.swing.JPanel();
@@ -301,16 +308,19 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane10 = new javax.swing.JScrollPane();
         c_partiTable = new javax.swing.JTable();
         jPanel19 = new javax.swing.JPanel();
-        jTextField19 = new javax.swing.JTextField();
-        jTextField20 = new javax.swing.JTextField();
-        jTextField21 = new javax.swing.JTextField();
-        jTextField22 = new javax.swing.JTextField();
+        l_ORno = new javax.swing.JTextField();
+        l_ORtype = new javax.swing.JTextField();
+        l_estab = new javax.swing.JTextField();
+        l_change = new javax.swing.JTextField();
         jLabel143 = new javax.swing.JLabel();
         jLabel144 = new javax.swing.JLabel();
         jLabel145 = new javax.swing.JLabel();
         jLabel146 = new javax.swing.JLabel();
         jLabel147 = new javax.swing.JLabel();
         c_total = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        l_remarks = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
         jButton16 = new javax.swing.JButton();
         jButton26 = new javax.swing.JButton();
         jButton25 = new javax.swing.JButton();
@@ -1934,23 +1944,28 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel120.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel120.setText("Liquidation");
 
-        jTable7.setModel(new javax.swing.table.DefaultTableModel(
+        liquidationTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Liquidation No", "OR", "OR Type", "Purpose", "Establishment"
+                "Liquidation No", "OR", "OR Type", "Establishment"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable7);
+        liquidationTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                liquidationTableMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(liquidationTable);
 
         jButton17.setBackground(new java.awt.Color(0, 102, 204));
         jButton17.setForeground(new java.awt.Color(255, 255, 255));
@@ -1961,11 +1976,6 @@ public class Dashboard extends javax.swing.JFrame {
                 jButton17ActionPerformed(evt);
             }
         });
-
-        jButton21.setBackground(new java.awt.Color(0, 204, 51));
-        jButton21.setForeground(new java.awt.Color(255, 255, 255));
-        jButton21.setText("Edit");
-        jButton21.setPreferredSize(new java.awt.Dimension(80, 23));
 
         jButton22.setBackground(new java.awt.Color(153, 153, 153));
         jButton22.setForeground(new java.awt.Color(255, 255, 255));
@@ -2000,12 +2010,11 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addGroup(LiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(LiquidationLayout.createSequentialGroup()
+                                .addGap(78, 78, 78)
                                 .addComponent(jTextField18)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane4))))
                 .addGap(28, 28, 28))
@@ -2021,7 +2030,6 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(LiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(LiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextField18))
                 .addGap(29, 29, 29)
@@ -2250,15 +2258,15 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel19.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField20.addActionListener(new java.awt.event.ActionListener() {
+        l_ORtype.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField20ActionPerformed(evt);
+                l_ORtypeActionPerformed(evt);
             }
         });
 
-        jTextField22.addActionListener(new java.awt.event.ActionListener() {
+        l_change.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField22ActionPerformed(evt);
+                l_changeActionPerformed(evt);
             }
         });
 
@@ -2280,52 +2288,64 @@ public class Dashboard extends javax.swing.JFrame {
         c_total.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         c_total.setText("Total");
 
+        l_remarks.setColumns(20);
+        l_remarks.setRows(5);
+        jScrollPane6.setViewportView(l_remarks);
+
+        jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        jLabel5.setText("Remarks:");
+
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addComponent(jLabel147)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(c_total))
-                    .addComponent(jLabel146)
-                    .addComponent(jLabel145)
-                    .addComponent(jLabel144)
-                    .addComponent(jLabel143)
-                    .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(63, Short.MAX_VALUE))
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel19Layout.createSequentialGroup()
+                            .addComponent(jLabel147)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(c_total))
+                        .addComponent(jLabel146)
+                        .addComponent(jLabel145)
+                        .addComponent(jLabel144)
+                        .addComponent(jLabel143)
+                        .addComponent(l_ORtype, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                        .addComponent(l_ORno, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                        .addComponent(l_change, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                        .addComponent(l_estab, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                        .addComponent(jScrollPane6)))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
                 .addComponent(jLabel143)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(l_ORno, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel144)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(l_ORtype, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel145)
                 .addGap(4, 4, 4)
-                .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(l_estab, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel146)
                 .addGap(1, 1, 1)
-                .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(l_change, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel147)
                     .addComponent(c_total))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jButton16.setBackground(new java.awt.Color(153, 0, 51));
@@ -2350,6 +2370,11 @@ public class Dashboard extends javax.swing.JFrame {
         jButton25.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton25.setForeground(new java.awt.Color(255, 255, 255));
         jButton25.setText("Liquidate");
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout createLiquidationLayout = new javax.swing.GroupLayout(createLiquidation);
         createLiquidation.setLayout(createLiquidationLayout);
@@ -2360,22 +2385,20 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel142, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(createLiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(createLiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(createLiquidationLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(createLiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
                                 .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(createLiquidationLayout.createSequentialGroup()
-                                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createLiquidationLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton25, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         createLiquidationLayout.setVerticalGroup(
@@ -2393,7 +2416,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         content.add(createLiquidation, "createLiq");
@@ -2596,12 +2619,11 @@ public class Dashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_approvedReqBtnActionPerformed
 
-    private void jTextField20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField20ActionPerformed
+    private void l_ORtypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_l_ORtypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField20ActionPerformed
+    }//GEN-LAST:event_l_ORtypeActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-       
 
         Particulars particular = new Particulars(this, true, this.AccountNo);
         particular.setLocationRelativeTo(this);
@@ -2612,12 +2634,12 @@ public class Dashboard extends javax.swing.JFrame {
             this.particularsList.add(particular.particularData);
         }
 
-       initC_table();
+        initC_table();
     }//GEN-LAST:event_jButton26ActionPerformed
 
-    private void jTextField22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField22ActionPerformed
+    private void l_changeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_l_changeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField22ActionPerformed
+    }//GEN-LAST:event_l_changeActionPerformed
 
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
         if (accountTableID <= 0) {
@@ -2633,11 +2655,11 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
-        if (voucherTableID <=0) {
+        if (voucherTableID <= 0) {
             JOptionPane.showMessageDialog(this, "Please select an item", "Select Item", JOptionPane.ERROR_MESSAGE);
             return;
         }
-         contentCards.show(content, "createLiq");
+        contentCards.show(content, "createLiq");
     }//GEN-LAST:event_jButton28ActionPerformed
 
     private void requestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_requestTableMouseClicked
@@ -2853,6 +2875,80 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jScrollPane2MouseClicked
 
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+
+        try {
+            int orNo = Integer.parseInt(l_ORno.getText());
+            String orType = l_ORtype.getText();
+            String establishment = l_estab.getText();
+            String change = l_change.getText();
+            String remarks = l_remarks.getText();
+
+            if (orType.isEmpty() || establishment.isEmpty() || change.isEmpty() || remarks.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Check for empty fields", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            cstmt = connection.prepareCall("Call `tps`.`insert.Liquidation`(?,?,?,?,?,?,?,?,?,?)");
+            cstmt.setInt(1, orNo);
+            cstmt.setString(2, orType);
+            cstmt.setString(3, establishment);
+            cstmt.setDouble(4, this.totalAmount);
+            cstmt.setDouble(5, Double.parseDouble(change));
+            cstmt.setTimestamp(6, DateMaker.getTime());
+            cstmt.setTimestamp(7, DateMaker.getTime());
+            cstmt.setInt(8, this.AccountNo);
+            cstmt.setString(9, remarks);
+            cstmt.setInt(10, this.voucherTableID);
+            cstmt.execute();
+
+            Statement checkID = connection.createStatement();
+            ResultSet lastID = checkID.executeQuery("select last_insert_id(`LiqNo`) as LiqNo, ORNo from liquidation order by LiqNo desc limit 1");
+
+            if (lastID.next()) {
+
+                for (Particular p : this.particularsList) {
+//IN `item` VARCHAR(45),
+//IN `unit` VARCHAR(45),
+//IN `qty` DOUBLE(10,2),
+//IN `cost` DOUBLE(10,2),
+//IN `total` DOUBLE(10,2) ,
+//IN `ORNo` INT,
+//IN `DateCreated` DATETIME,
+//IN `DateUpdated` DATETIME,
+//IN `AccNo` INT)
+                    cstmt = connection.prepareCall("Call `tps`.`insert.Particular`(?,?,?,?,?,?,?,?,?)");
+                    cstmt.setString(1, p.item);
+                    cstmt.setString(2, p.unit);
+                    cstmt.setDouble(3, p.qty);
+                    cstmt.setDouble(4, p.cost);
+                    cstmt.setDouble(5, p.total);
+                    cstmt.setInt(6, lastID.getInt("ORNo"));
+                    cstmt.setTimestamp(7, p.dateCreated);
+                    cstmt.setTimestamp(8, p.dateCreated);
+                    cstmt.setInt(9, p.accNo);
+
+                    cstmt.execute();
+                }
+
+            }
+
+            initTables();
+            JOptionPane.showMessageDialog(this, "Liquidation created", "Created Successfully", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Checck for input field", "Ivalid format", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void liquidationTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_liquidationTableMouseClicked
+        // TODO add your handling code here:
+        this.liquidationTableID = Integer.parseInt(liquidationTable.getValueAt(liquidationTable.getSelectedRow(), 0).toString());
+    }//GEN-LAST:event_liquidationTableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2939,7 +3035,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton25;
@@ -3014,6 +3109,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
@@ -3058,16 +3154,18 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
     private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField21;
-    private javax.swing.JTextField jTextField22;
+    private javax.swing.JTextField l_ORno;
+    private javax.swing.JTextField l_ORtype;
+    private javax.swing.JTextField l_change;
+    private javax.swing.JTextField l_estab;
+    private javax.swing.JTextArea l_remarks;
+    private javax.swing.JTable liquidationTable;
     private javax.swing.JLabel r_Role;
     private javax.swing.JLabel r_created;
     private javax.swing.JLabel r_roleNo;
@@ -3177,6 +3275,13 @@ public class Dashboard extends javax.swing.JFrame {
                 Object[] tmp = {branchRes.getString("BranchNo"), branchRes.getString("Branch"), branchRes.getString("Address")};
                 branchTableModel.addRow(tmp);
             }
+            
+              Statement liqStmt = connection.createStatement();
+            ResultSet liqRes = liqStmt.executeQuery("select LiqNo, ORNo, ORType, establishment from liquidation;");
+            while (liqRes.next()) {
+                Object[] tmp = {liqRes.getString("LiqNo"), liqRes.getString("ORNo"), liqRes.getString("ORType"), liqRes.getString("establishment")};
+                liquidationTableModel.addRow(tmp);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -3235,11 +3340,11 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     private void initC_table() {
-         c_TableModel.setRowCount(0);
-         int tmpTotal = 0;
-         
-         for (Particular p : particularsList) {
-             tmpTotal += p.total;
+        c_TableModel.setRowCount(0);
+        int tmpTotal = 0;
+
+        for (Particular p : particularsList) {
+            tmpTotal += p.total;
             Object[] tmp = {p.pNo, p.item, p.unit, p.qty};
             c_TableModel.addRow(tmp);
         }

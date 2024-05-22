@@ -19,6 +19,7 @@ public class Particulars extends java.awt.Dialog {
 
     public Particular particularData;
     int accNo;
+    double totalAmount;
 
     public Particulars(java.awt.Frame parent, boolean modal, int accNo) {
         super(parent, modal);
@@ -241,17 +242,18 @@ public class Particulars extends java.awt.Dialog {
 
             int t_quantity = Integer.parseInt(textQuantity.getText());
             double t_cost = Double.parseDouble(textCost.getText());
-            double totalAmount = t_quantity * t_cost;
+            totalAmount = t_quantity * t_cost;
             total.setText(String.valueOf(totalAmount));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Enter a number for cost and quantity", "Invalid Format", JOptionPane.ERROR_MESSAGE);    
-       return;
+            JOptionPane.showMessageDialog(this, "Enter a number for cost and quantity", "Invalid Format", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         System.out.println("whaaa");
         int choice = JOptionPane.showConfirmDialog(this, "Confim Submit", "Submit", JOptionPane.CANCEL_OPTION);
         System.out.println(choice);
         if (choice == 0) {
             particularData = new Particular(item, unit, Double.parseDouble(quantity), Integer.parseInt(cost), Double.parseDouble(total.getText()), DateMaker.getTime(), DateMaker.getTime(), this.accNo);
+            
             this.dispose();
         }
     }//GEN-LAST:event_jButton19ActionPerformed
