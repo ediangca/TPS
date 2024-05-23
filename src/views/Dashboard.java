@@ -2716,7 +2716,22 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please select an item", "Select Item", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        contentCards.show(content, "createLiq");
+        
+        try {
+            Statement chStmt = connection.createStatement();
+            ResultSet res = chStmt.executeQuery("SELECT `status` FROM voucher WHERE VoucherNo = " + this.voucherTableID);
+            
+            if (res.next() && res.getString("status").equals("For Liquidation")) {
+                 contentCards.show(content, "createLiq");
+                 return;
+            }
+             JOptionPane.showMessageDialog(this, "This voucher has already been liquidation", "Already Liquidated", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+       
     }//GEN-LAST:event_jButton28ActionPerformed
 
     private void requestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_requestTableMouseClicked
