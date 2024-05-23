@@ -277,10 +277,11 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel120 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         liquidationTable = new javax.swing.JTable();
-        jTextField18 = new javax.swing.JTextField();
+        liqSearch = new javax.swing.JTextField();
         jButton17 = new javax.swing.JButton();
         jButton22 = new javax.swing.JButton();
         jButton23 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
         viewLiquidations = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
@@ -1971,6 +1972,12 @@ public class Dashboard extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(liquidationTable);
 
+        liqSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                liqSearchActionPerformed(evt);
+            }
+        });
+
         jButton17.setBackground(new java.awt.Color(0, 102, 204));
         jButton17.setForeground(new java.awt.Color(255, 255, 255));
         jButton17.setText("Search");
@@ -1999,6 +2006,16 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton11.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
+        jButton11.setForeground(new java.awt.Color(0, 51, 204));
+        jButton11.setText("refresh");
+        jButton11.setContentAreaFilled(false);
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout LiquidationLayout = new javax.swing.GroupLayout(Liquidation);
         Liquidation.setLayout(LiquidationLayout);
         LiquidationLayout.setHorizontalGroup(
@@ -2010,12 +2027,14 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jLabel120, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                         .addGap(494, 494, 494)
                         .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(LiquidationLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, LiquidationLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(LiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(LiquidationLayout.createSequentialGroup()
-                                .addGap(78, 78, 78)
-                                .addComponent(jTextField18)
+                                .addComponent(jButton11)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(LiquidationLayout.createSequentialGroup()
+                                .addComponent(liqSearch)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -2035,9 +2054,11 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(LiquidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField18))
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                    .addComponent(liqSearch))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4)
                 .addContainerGap())
         );
 
@@ -2610,8 +2631,19 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton17ActionPerformed
+        try {
+            liquidationTableModel.setRowCount(0);
+            Statement searStmt = connection.createStatement();
+            ResultSet liqRes = searStmt.executeQuery("SELECT * FROM liquidation WHERE ORType = '" + liqSearch.getText() + "' OR establishment = '" + liqSearch.getText() + "'");
+            
+          while (liqRes.next()) {
+                Object[] tmp = {liqRes.getString("LiqNo"), liqRes.getString("ORNo"), liqRes.getString("ORType"), liqRes.getString("establishment")};
+                liquidationTableModel.addRow(tmp);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }    }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
         if (liquidationTableID <= 0) {
@@ -2716,22 +2748,21 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please select an item", "Select Item", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         try {
             Statement chStmt = connection.createStatement();
             ResultSet res = chStmt.executeQuery("SELECT `status` FROM voucher WHERE VoucherNo = " + this.voucherTableID);
-            
+
             if (res.next() && res.getString("status").equals("For Liquidation")) {
-                 contentCards.show(content, "createLiq");
-                 return;
+                contentCards.show(content, "createLiq");
+                return;
             }
-             JOptionPane.showMessageDialog(this, "This voucher has already been liquidation", "Already Liquidated", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "This voucher has already been liquidation", "Already Liquidated", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-       
+
+
     }//GEN-LAST:event_jButton28ActionPerformed
 
     private void requestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_requestTableMouseClicked
@@ -3041,6 +3072,15 @@ public class Dashboard extends javax.swing.JFrame {
         viewPar.setVisible(true);
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void liqSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liqSearchActionPerformed
+
+    }//GEN-LAST:event_liqSearchActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        initTables();
+    }//GEN-LAST:event_jButton11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3119,6 +3159,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> filterReq;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
@@ -3240,12 +3281,12 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField l_ORno;
     private javax.swing.JTextField l_ORtype;
     private javax.swing.JTextField l_change;
     private javax.swing.JTextField l_estab;
     private javax.swing.JTextArea l_remarks;
+    private javax.swing.JTextField liqSearch;
     private javax.swing.JTable liquidationTable;
     private javax.swing.JLabel r_Role;
     private javax.swing.JLabel r_created;
