@@ -25,16 +25,15 @@ import models.Particular;
  * @author edian
  */
 public class Dashboard extends javax.swing.JFrame {
-    
+
     CardLayout contentCards;
-    showVoucherList voucherList;
-    
+
     Connection connection;
     Statement statement;
-    
+
     ResultSet result;
     CallableStatement cstmt;
-    
+
     int AccountNo;
 
 //    tables
@@ -54,18 +53,18 @@ public class Dashboard extends javax.swing.JFrame {
     int liquidationTableID;
     int c_partiTableID;
     int vl_tableID;
-    
+
     double totalAmount;
 
 //    arraylist
     ArrayList<Particular> particularsList = new ArrayList<>();
-    
+
     public Dashboard() {
         initComponents();
         setLocationRelativeTo(null);
         contentCards = (CardLayout) content.getLayout();
     }
-    
+
     public Dashboard(Connection connection) {
         initComponents();
         this.connection = connection;
@@ -75,28 +74,28 @@ public class Dashboard extends javax.swing.JFrame {
 //        tables
         requestTableModel = (DefaultTableModel) requestTable.getModel();
         requestTable.setModel(requestTableModel);
-        
+
         voucherTableModel = (DefaultTableModel) voucherTableList.getModel();
         voucherTableList.setModel(voucherTableModel);
-        
+
         accountTableModel = (DefaultTableModel) accountListTable.getModel();
         accountListTable.setModel(accountTableModel);
-        
+
         roleTableModel = (DefaultTableModel) roleTableList.getModel();
         roleTableList.setModel(roleTableModel);
-        
+
         branchTableModel = (DefaultTableModel) branchTableList.getModel();
         branchTableList.setModel(branchTableModel);
-        
+
         c_TableModel = (DefaultTableModel) c_partiTable.getModel();
         c_partiTable.setModel(c_TableModel);
-        
+
         liquidationTableModel = (DefaultTableModel) liquidationTable.getModel();
         liquidationTable.setModel(liquidationTableModel);
-        
+
         vl_tableModel = (DefaultTableModel) vl_table.getModel();
         vl_table.setModel(vl_tableModel);
-        
+
         initTables();
     }
 
@@ -2498,7 +2497,7 @@ public class Dashboard extends javax.swing.JFrame {
         try {
             String query = searchReqText.getText();
             requestTableModel.setRowCount(0);
-            
+
             statement = connection.createStatement();
             ResultSet r = statement.executeQuery("select * from request WHERE `usage` = '" + query + "' OR project = '" + query + "' OR purpose = '" + query + "'");
             while (r.next()) {
@@ -2516,20 +2515,20 @@ public class Dashboard extends javax.swing.JFrame {
         createRequest createrequest = new createRequest(this, true, this.connection, this.AccountNo);
         createrequest.setLocationRelativeTo(null);
         createrequest.setVisible(true);
-        
+
         initTables();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:       
         int row = requestTable.getSelectedRow();
-        
+
         if (row < 0) {
             JOptionPane.showMessageDialog(this, "No Request Selected", "Request Not Found", JOptionPane.ERROR_MESSAGE);
             return;
         }
         viewRequestPage(requestTableID);
-        
+
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -2541,20 +2540,20 @@ public class Dashboard extends javax.swing.JFrame {
 
 //            System.out.println("SELECT a.AccNo, a.username, r.`Role`, b.`Branch`, a.address, a.address FROM accounts a JOIN branch b ON b.BranchNo = a.BranchNo JOIN `role` r ON r.RoleNo = a.RoleNo WHERE a.username LIKE " +query+ " OR a.email LIKE " +query+ " OR a.address LIKE " +query+ ";");
             ResultSet accRes = statement.executeQuery("SELECT a.AccNo, a.username, r.`Role`, b.`Branch`, a.address, a.email FROM accounts a JOIN branch b ON b.BranchNo = a.BranchNo JOIN `role` r ON r.RoleNo = a.RoleNo WHERE a.username LIKE " + query + " OR a.email LIKE " + query + " OR a.address LIKE " + query + ";");
-            
+
             while (accRes.next()) {
                 Object[] tmp = {accRes.getInt("AccNo"), accRes.getString("username"), accRes.getString("Role"), accRes.getString("branch"), accRes.getString("address"), accRes.getString("email")};
                 accountTableModel.addRow(tmp);
                 accountTableModel.fireTableDataChanged();
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        
+
         if (accountTableID <= 0) {
             JOptionPane.showMessageDialog(this, "No Account Selected", "Account Not Found", JOptionPane.ERROR_MESSAGE);
             return;
@@ -2562,7 +2561,7 @@ public class Dashboard extends javax.swing.JFrame {
         try {
             Statement vStmt = connection.createStatement();
             ResultSet res = vStmt.executeQuery("SELECT a.AccNo, a.username, a.firstname, a.mi, a.lastname, a.email, a.contactNo, b.Branch, a.DateCreated, a.DateUpdated, c.username AS creator FROM accounts a JOIN branch b ON a.BranchNo = b.BranchNo JOIN accounts c ON c.AccNo = a.CreatedBy WHERE a.AccNo = " + accountTableID);
-            
+
             if (res.next()) {
                 v_accNo.setText(res.getString("AccNo"));
                 v_username.setText(res.getString("username"));
@@ -2576,9 +2575,9 @@ public class Dashboard extends javax.swing.JFrame {
                 v_updatedAt.setText(res.getString("DateUpdated"));
                 v_createdBy.setText(res.getString("creator"));
             }
-            
+
             contentCards.show(content, "viewAcc");
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2603,7 +2602,7 @@ public class Dashboard extends javax.swing.JFrame {
         listDialog lDialog = new listDialog(this, true, this.connection, requestTableID, AccountNo);
         lDialog.setLocationRelativeTo(null);
         lDialog.setVisible(true);
-        
+
         if (lDialog.isViewing && lDialog.selectedID > 0) {
             viewRequestPage(lDialog.selectedID);
         }
@@ -2619,13 +2618,13 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No Liquidation Selected", "Liquidation Not Found", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         try {
             // TODO add your handling code here:
             Statement stt = connection.createStatement();
             ResultSet r = stt.executeQuery("select l.LiqNo, l.ORNo, l.ORType, l.establishment, l.total, l.`change`, l.remarks,l.DateCreated,l.DateUpdated, a.username from liquidation l join accounts a on l.AccNo = a.AccNo WHERE LiqNo = " + this.liquidationTableID);
             if (r.next()) {
-                
+
                 vl_liqNo.setText(r.getString("LiqNo"));
                 vl_no.setText(r.getString("ORNo"));
                 vl_type.setText(r.getString("ORType"));
@@ -2637,19 +2636,19 @@ public class Dashboard extends javax.swing.JFrame {
                 vl_liqBy.setText(r.getString("username"));
                 vl_remark.setText(r.getString("remarks"));
             }
-            
+
             Statement st1 = connection.createStatement();
-            ResultSet r2 = st1.executeQuery("select last_insert_id(`ORNo`) as t from liquidation order by LiqNo desc limit 1");            
+            ResultSet r2 = st1.executeQuery("select last_insert_id(`ORNo`) as t from liquidation order by LiqNo desc limit 1");
             if (r2.next()) {
-                Statement st2 = connection.createStatement();                
+                Statement st2 = connection.createStatement();
                 ResultSet r3 = st2.executeQuery("select * from particulars where ORNo = " + r2.getInt("t"));
-                
-                while (r3.next()) {                    
-                    Object[] t = {r3.getString("PNo"),r3.getString("item"), r3.getString("qty")};
+
+                while (r3.next()) {
+                    Object[] t = {r3.getString("PNo"), r3.getString("item"), r3.getString("qty")};
                     vl_tableModel.addRow(t);
                 }
             }
-            
+
             contentCards.show(content, "viewLiq");
         } catch (SQLException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
@@ -2658,13 +2657,15 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
         // TODO add your handling code here:
-        voucherList = new showVoucherList(this, true, this.connection);
-        voucherList.setLocationRelativeTo(this);
-        voucherList.setVisible(true);
-        
-        voucherTableID = voucherList.id;
-        contentCards.show(content, "liguidation");
 
+        showVoucherList showVoucher = new showVoucherList(this, true, this.connection);
+        showVoucher.setLocationRelativeTo(null);
+        showVoucher.setVisible(true);
+
+        if (showVoucher.id > 0 && showVoucher.isSelect) {
+            this.voucherTableID = showVoucher.id;
+            contentCards.show(content, "createLiq");
+        }
     }//GEN-LAST:event_jButton23ActionPerformed
 
     private void approvedReqBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approvedReqBtnActionPerformed
@@ -2680,16 +2681,16 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_l_ORtypeActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        
+
         Particulars particular = new Particulars(this, true, this.AccountNo);
         particular.setLocationRelativeTo(this);
         particular.setVisible(true);
-        
+
         System.out.println(particular.particularData);
         if (particular.particularData != null) {
             this.particularsList.add(particular.particularData);
         }
-        
+
         initC_table();
     }//GEN-LAST:event_jButton26ActionPerformed
 
@@ -2702,7 +2703,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please select an item", "Select Item", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         createAccount editAcc = new createAccount(this, true, connection, true, accountTableID);
         System.out.println(accountTableID);
         editAcc.setLocationRelativeTo(null);
@@ -2727,15 +2728,15 @@ public class Dashboard extends javax.swing.JFrame {
         try {
             statement = connection.createStatement();
             ResultSet check = statement.executeQuery("SELECT * FROM request WHERE request.ReqNo = " + requestTableID);
-            
+
             if (check.next() && !check.getString("status").equals("For Approval")) {
                 JOptionPane.showMessageDialog(this, "Request is already approved", "Error editing request", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             statement = connection.createStatement();
             ResultSet r = statement.executeQuery("SELECT * FROM request WHERE request.ReqNo = " + requestTableID);
-            
+
             if (r.next()) {
                 createRequest editAcc = new createRequest(this, true, connection, this.AccountNo, r, requestTableID);
                 editAcc.setLocationRelativeTo(this);
@@ -2754,11 +2755,11 @@ public class Dashboard extends javax.swing.JFrame {
     private void voucherTableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voucherTableListMouseClicked
         // TODO add your handling code here:
         voucherTableID = Integer.parseInt(voucherTableList.getValueAt(voucherTableList.getSelectedRow(), 0).toString());
-        
+
         try {
             Statement vouchStmt = connection.createStatement();
             ResultSet res = vouchStmt.executeQuery("SELECT * FROM voucher LEFT JOIN request ON voucher.ReqNo = request.ReqNo WHERE VoucherNo = " + voucherTableID);
-            
+
             while (res.next()) {
                 VNo.setText(res.getString("VoucherNo"));
                 VType.setText(res.getString("VoucherType"));
@@ -2769,7 +2770,7 @@ public class Dashboard extends javax.swing.JFrame {
                 VStatus.setText(res.getString("status"));
                 VCAT.setText(res.getTimestamp("DateCreated").toString());
                 VUAT.setText(res.getTimestamp("DateUpdated").toString());
-                
+
             }
         } catch (SQLException e) {
         }
@@ -2778,12 +2779,12 @@ public class Dashboard extends javax.swing.JFrame {
     private void saveBranchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBranchBtnActionPerformed
         String branch = branchName.getText();
         String address = branchAddress.getText();
-        
+
         if (branch.isEmpty() || address.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         try {
             cstmt = connection.prepareCall("INSERT INTO branch(Branch, Address, DateCreated, DateUpdated, AccNo) VALUES (?, ?, ?, ?, ?)");
             cstmt.setString(1, branch);
@@ -2792,7 +2793,7 @@ public class Dashboard extends javax.swing.JFrame {
             cstmt.setTimestamp(4, DateMaker.getTime());
             cstmt.setInt(5, AccountNo);
             cstmt.execute();
-            
+
             JOptionPane.showMessageDialog(this, "Branch Added Success", "Branch Added", JOptionPane.INFORMATION_MESSAGE);
             initTables();
         } catch (SQLException ex) {
@@ -2812,12 +2813,12 @@ public class Dashboard extends javax.swing.JFrame {
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
         String role = createRole.getText();
-        
+
         if (role.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please check for empty fields!", "SQLException", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         try {
             cstmt = connection.prepareCall("INSERT INTO role(Role, DateCreated, DateUpdated, AccNo) VALUES (?, ?, ?, ?)");
             cstmt.setString(1, role);
@@ -2825,7 +2826,7 @@ public class Dashboard extends javax.swing.JFrame {
             cstmt.setTimestamp(3, DateMaker.getTime());
             cstmt.setInt(4, this.AccountNo);
             cstmt.execute();
-            
+
             JOptionPane.showMessageDialog(this, "Role Added Success", "Role Added", JOptionPane.INFORMATION_MESSAGE);
             initTables();
             createRole.setText(null);
@@ -2837,21 +2838,21 @@ public class Dashboard extends javax.swing.JFrame {
     private void roleTableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roleTableListMouseClicked
         // TODO add your handling code here:
         int roleID = Integer.parseInt(roleTableList.getValueAt(roleTableList.getSelectedRow(), 0).toString());
-        
+
         try {
             Statement resRoleStmt = connection.createStatement();
-            
+
             ResultSet resRole = resRoleStmt.executeQuery("SELECT r.RoleNo, r.`Role`, r.DateCreated, a.username FROM `role` r JOIN accounts a ON a.AccNo = r.AccNo WHERE r.RoleNo = " + roleID);
-            
+
             if (resRole.next()) {
-                
+
                 r_roleNo.setText(resRole.getString("RoleNo"));
                 r_Role.setText(resRole.getString("Role"));
                 jLabel117.setText(resRole.getString("DateCreated"));
                 r_created.setText(resRole.getString("username"));
             } else {
                 JOptionPane.showMessageDialog(this, "ID Not Found", "No ID", JOptionPane.ERROR_MESSAGE);
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
@@ -2860,11 +2861,11 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void branchTableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_branchTableListMouseClicked
         int ID = Integer.parseInt(branchTableList.getValueAt(branchTableList.getSelectedRow(), 0).toString());
-        
+
         try {
             Statement branchStmt = connection.createStatement();
             ResultSet branchRes = branchStmt.executeQuery("SELECT * FROM branch b JOIN accounts a ON b.AccNo = a.AccNo WHERE b.BranchNo = " + ID);
-            
+
             if (branchRes.next()) {
                 b_branchNo.setText(branchRes.getString("BranchNo"));
                 b_branch.setText(branchRes.getString("branch"));
@@ -2883,7 +2884,7 @@ public class Dashboard extends javax.swing.JFrame {
             String filters = filterReq.getSelectedItem().toString();
             Statement stmt = connection.createStatement();
             String q = "SELECT * FROM request WHERE `status` = ";
-            
+
             if (filters.equals("For Approval")) {
                 requestTableModel.setRowCount(0);
                 ResultSet reqRes = stmt.executeQuery(q + " 'For Approval'");
@@ -2900,9 +2901,9 @@ public class Dashboard extends javax.swing.JFrame {
                     requestTableModel.addRow(tmp);
                     requestTableModel.fireTableDataChanged();
                 }
-                
+
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -2915,7 +2916,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_c_partiTableMouseClicked
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        
+
         for (Particular p : particularsList) {
             if (p.pNo == this.c_partiTableID) {
                 this.particularsList.remove(p);
@@ -2932,19 +2933,19 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jScrollPane2MouseClicked
 
     private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
-        
+
         try {
             int orNo = Integer.parseInt(l_ORno.getText());
             String orType = l_ORtype.getText();
             String establishment = l_estab.getText();
             String change = l_change.getText();
             String remarks = l_remarks.getText();
-            
+
             if (orType.isEmpty() || establishment.isEmpty() || change.isEmpty() || remarks.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Check for empty fields", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             cstmt = connection.prepareCall("Call `tps`.`insert.Liquidation`(?,?,?,?,?,?,?,?,?,?)");
             cstmt.setInt(1, orNo);
             cstmt.setString(2, orType);
@@ -2957,12 +2958,12 @@ public class Dashboard extends javax.swing.JFrame {
             cstmt.setString(9, remarks);
             cstmt.setInt(10, this.voucherTableID);
             cstmt.execute();
-            
+
             Statement checkID = connection.createStatement();
             ResultSet lastID = checkID.executeQuery("select last_insert_id(`LiqNo`) as LiqNo, ORNo from liquidation order by LiqNo desc limit 1");
-            
+
             if (lastID.next()) {
-                
+
                 for (Particular p : this.particularsList) {
 //IN `item` VARCHAR(45),
 //IN `unit` VARCHAR(45),
@@ -2983,15 +2984,18 @@ public class Dashboard extends javax.swing.JFrame {
                     cstmt.setTimestamp(7, p.dateCreated);
                     cstmt.setTimestamp(8, p.dateCreated);
                     cstmt.setInt(9, p.accNo);
-                    
+
                     cstmt.execute();
                 }
-                
+
+//                System.out.println(this.particularsList);
+                this.particularsList.removeAll(particularsList);
+//                 System.out.println(this.particularsList);
             }
-            
+
             initTables();
             JOptionPane.showMessageDialog(this, "Liquidation created", "Created Successfully", JOptionPane.INFORMATION_MESSAGE);
-            
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Checck for input field", "Ivalid format", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
@@ -3016,7 +3020,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No item seletected", "Not found", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         Particulars viewPar = new Particulars(this, true, vl_tableID, connection);
         viewPar.setLocationRelativeTo(null);
         viewPar.setVisible(true);
@@ -3281,34 +3285,32 @@ public class Dashboard extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void showItemPanel(JPanel panelItem) {
-        
+
         if (panelItem.isVisible()) {
             panelItem.setVisible(false);
             return;
         }
         panelItem.setVisible(true);
     }
-    
+
     public void gotoCreateLiq(int id) {
-        System.out.println(id);
         contentCards.show(content, "createLiq");
-        voucherList.dispose();
-        
     }
-    
+
     void setAccount(int AccountNo, String accountName) {
         this.AccountNo = AccountNo;
         userWelcome.setText(accountName);
-        
+
     }
-    
+
     private void initTables() {
         requestTableModel.setRowCount(0);
         voucherTableModel.setRowCount(0);
         accountTableModel.setRowCount(0);
         roleTableModel.setRowCount(0);
         branchTableModel.setRowCount(0);
-        
+        liquidationTableModel.setRowCount(0);
+
         try {
 //            Request table
             Statement reqStmt = connection.createStatement();
@@ -3334,62 +3336,62 @@ public class Dashboard extends javax.swing.JFrame {
                 Object[] tmp = {accRes.getInt("AccNo"), accRes.getString("username"), accRes.getString("Role"), accRes.getString("branch"), accRes.getString("address"), accRes.getString("email")};
                 accountTableModel.addRow(tmp);
             }
-            
+
             Statement roleStmt = connection.createStatement();
             ResultSet roleRes = roleStmt.executeQuery("SELECT RoleNo, `Role` FROM `role`");
             while (roleRes.next()) {
                 Object[] tmp = {roleRes.getInt("RoleNo"), roleRes.getString("Role")};
                 roleTableModel.addRow(tmp);
             }
-            
+
             Statement branchStmt = connection.createStatement();
             ResultSet branchRes = branchStmt.executeQuery("SELECT BranchNo, Branch, Address from branch");
             while (branchRes.next()) {
                 Object[] tmp = {branchRes.getString("BranchNo"), branchRes.getString("Branch"), branchRes.getString("Address")};
                 branchTableModel.addRow(tmp);
             }
-            
+
             Statement liqStmt = connection.createStatement();
             ResultSet liqRes = liqStmt.executeQuery("select LiqNo, ORNo, ORType, establishment from liquidation;");
             while (liqRes.next()) {
                 Object[] tmp = {liqRes.getString("LiqNo"), liqRes.getString("ORNo"), liqRes.getString("ORType"), liqRes.getString("establishment")};
                 liquidationTableModel.addRow(tmp);
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
+
     private String getRoleNo(String role) {
         try {
-            
+
             statement = connection.createStatement();
-            
+
             result = statement.executeQuery("select roleNo from role where role ='" + role + "'");
             if (result.next()) {
-                
+
                 return result.getString(1);
             }
-            
+
         } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return "";
     }
-    
+
     private void viewRequestPage(int requestTableID) {
         try {
             approvedReqBtn.setVisible(true);
             statement = connection.createStatement();
             ResultSet r = statement.executeQuery("SELECT ReqNo, username, `usage`, project, purpose, mop, amount, `status`, request.DateUpdated, request.DateCreated FROM request JOIN accounts ON request.AccNo = accounts.AccNo WHERE request.ReqNo = " + requestTableID);
-            
+
             if (r.next()) {
                 if (r.getString("status").equals("Approved")) {
                     approvedReqBtn.setVisible(false);
                 }
-                
+
                 viewReqNo.setText(String.valueOf(r.getInt("ReqNo")));
                 viewPurpose.setText(r.getString("purpose"));
                 viewReqBy.setText(r.getString("username"));
@@ -3401,21 +3403,21 @@ public class Dashboard extends javax.swing.JFrame {
                 viewCAT.setText(String.valueOf(r.getTimestamp("DateCreated")));
                 viewUAT.setText(String.valueOf(r.getTimestamp("DateUpdated")));
                 contentCards.show(content, "viewReq");
-                
+
             } else {
                 JOptionPane.showMessageDialog(this, "No Request Selected", "Request Not Found", JOptionPane.ERROR_MESSAGE);
-                
+
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void initC_table() {
         c_TableModel.setRowCount(0);
         int tmpTotal = 0;
-        
+
         for (Particular p : particularsList) {
             tmpTotal += p.total;
             Object[] tmp = {p.pNo, p.item, p.unit, p.qty};

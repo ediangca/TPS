@@ -109,7 +109,7 @@ public class showVoucherList extends java.awt.Dialog {
 
             },
             new String [] {
-                "Voucher No", "Voucher Type", "Amount", "Purpose"
+                "Voucher No", "Voucher Type", "Amount", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -181,7 +181,7 @@ public class showVoucherList extends java.awt.Dialog {
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
         isSelect = true;
-      
+      this.dispose();
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -208,7 +208,7 @@ public class showVoucherList extends java.awt.Dialog {
     private void initTable() {
         try {
             Statement stmt = conn.createStatement();
-            ResultSet res = stmt.executeQuery("SELECT * FROM voucher");
+            ResultSet res = stmt.executeQuery("SELECT * FROM voucher WHERE `status` = 'For Liquidation'");
             while (res.next()) {
                 Object[] tmp = {res.getInt("VoucherNo"), res.getString("VoucherType"), res.getDouble("amount"), res.getString("status")};
                 model.addRow(tmp);
